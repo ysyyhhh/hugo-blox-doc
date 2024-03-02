@@ -14,7 +14,7 @@ marketing:
     site_type: Project
     local_business_type: ''
     org_name: ''
-    description: 'A highly-customizable Hugo documentation theme powered by Hugo Blox website builder.'
+    description: ''
     twitter: 'GetResearchDev'
   analytics:
     google_analytics: ''
@@ -25,8 +25,11 @@ marketing:
     fathom: ''
     pirsch: ''
   verification:
-    google: ''
-    baidu: ''
+    google: ""
+    bing: ""
+    baidu: ""
+    yandex: ""
+    pinterest: ""
 
 # Site header
 header:
@@ -38,23 +41,22 @@ header:
     logo:
       text: ""
       # Logo filename in `assets/media/` folder
-      filename: "logo.svg"
-    button:
-      enable: true
-      text: "Get Started"
-      url: "https://hugoblox.com/templates/details/docs/"
+      filename: "isolated-monochrome-black.svg"
+    # button:
+    #   enable: true
+    #   text: "Get Started"
+    #   url: "https://hugoblox.com/templates/details/docs/"
     show_search: true
     show_theme_chooser: true
-
 # Site footer
-footer:
-  copyright:
-    notice: '© {year} My Company. This work is licensed under {license}'
-    license:
-      enable: true
-      allow_derivatives: false
-      share_alike: true
-      allow_commercial: false
+# footer:
+#   copyright:
+#     notice: '© {year} My Company. This work is licensed under {license}'
+#     license:
+#       enable: true
+#       allow_derivatives: false
+#       share_alike: true
+#       allow_commercial: false
 
 # Localization
 locale:
@@ -68,7 +70,7 @@ features:
   privacy_pack:
     enable: false
   repository:
-    url: 'https://github.com/HugoBlox/hugo-blox-builder/'
+    url: 'https://github.com/ysyyhhh/hugo-blox-doc/'
     content_dir: 'starters/documentation/content'
     branch: 'main'
   feedback:

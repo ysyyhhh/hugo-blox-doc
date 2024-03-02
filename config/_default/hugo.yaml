@@ -3,8 +3,8 @@
 # Hugo Documentation: https://gohugo.io/getting-started/configuration/#all-configuration-settings
 # This file is formatted using YAML syntax - learn more at https://learnxinyminutes.com/docs/yaml/
 
-title: "Hugo Docs" # Website name
-baseURL: 'https://example.com/' # Website URL
+title: "Ysyy's" # Website name
+baseURL: 'https://ysyyhhh.github.io/' # Website URL
 
 ############################
 ## PAGE OPTIONS
@@ -17,7 +17,7 @@ cascade:
     editable: true
     show_breadcrumb: true
     # Hide date from Next In Series
-    show_date: false
+    show_date: true
     # Show date modified at end of content
     show_date_updated: true
   # Blog post options
