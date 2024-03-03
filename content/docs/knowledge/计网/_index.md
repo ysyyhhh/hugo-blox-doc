@@ -1,6 +1,6 @@
 ---
-linkTitle: ¼ÆÍø
-title: ¼ÆÍø
+linkTitle: è®¡ç½‘
+title: è®¡ç½‘
 ---
 
-This section covers ¼ÆÍø docs.
+This section covers è®¡ç½‘ docs.

@@ -1,6 +1,6 @@
 ---
-linkTitle: ²¿Êð
-title: ²¿Êð
+linkTitle: éƒ¨ç½²
+title: éƒ¨ç½²
 ---
 
-This section covers ²¿Êð docs.
+This section covers éƒ¨ç½² docs.

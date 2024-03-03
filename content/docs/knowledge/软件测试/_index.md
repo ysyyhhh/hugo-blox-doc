@@ -1,6 +1,6 @@
 ---
-linkTitle: Èí¼ş²âÊÔ
-title: Èí¼ş²âÊÔ
+linkTitle: è½¯ä»¶æµ‹è¯•
+title: è½¯ä»¶æµ‹è¯•
 ---
 
-This section covers Èí¼ş²âÊÔ docs.
+This section covers è½¯ä»¶æµ‹è¯• docs.

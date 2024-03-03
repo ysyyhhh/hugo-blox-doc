@@ -1,6 +1,6 @@
 ---
-linkTitle: �ֲ�ʽ
-title: �ֲ�ʽ
+linkTitle: 分布式
+title: 分布式
 ---
 
-This section covers �ֲ�ʽ docs.
+This section covers 分布式 docs.

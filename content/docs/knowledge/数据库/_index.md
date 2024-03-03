@@ -1,6 +1,6 @@
 ---
-linkTitle: Êı¾İ¿â
-title: Êı¾İ¿â
+linkTitle: æ•°æ®åº“
+title: æ•°æ®åº“
 ---
 
-This section covers Êı¾İ¿â docs.
+This section covers æ•°æ®åº“ docs.
