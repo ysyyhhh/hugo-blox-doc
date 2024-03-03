@@ -1,6 +1,6 @@
 ---
-linkTitle: æœåŠ¡ç«¯ç¼–ç¨‹
-title: æœåŠ¡ç«¯ç¼–ç¨‹
+linkTitle: ·şÎñ¶Ë±à³Ì
+title: ·şÎñ¶Ë±à³Ì
 ---
 
-This section covers æœåŠ¡ç«¯ç¼–ç¨‹ docs.
+This section covers ·şÎñ¶Ë±à³Ì docs.

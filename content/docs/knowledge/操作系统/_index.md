@@ -1,6 +1,6 @@
 ---
-linkTitle: 鎿嶄綔绯荤粺
-title: 鎿嶄綔绯荤粺
+linkTitle: 操作系统
+title: 操作系统
 ---
 
-This section covers 鎿嶄綔绯荤粺 docs.
+This section covers 操作系统 docs.

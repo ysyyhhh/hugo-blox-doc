@@ -1,6 +1,6 @@
 ---
-linkTitle: å¼€å‘
-title: å¼€å‘
+linkTitle: ¿ª·¢
+title: ¿ª·¢
 ---
 
-This section covers å¼€å‘ docs.
+This section covers ¿ª·¢ docs.

@@ -1,6 +1,6 @@
 ---
-linkTitle: 算法
-title: 算法
+linkTitle: �㷨
+title: �㷨
 ---
 
-This section covers 算法 docs.
+This section covers �㷨 docs.
