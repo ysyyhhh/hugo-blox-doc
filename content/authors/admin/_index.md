@@ -70,12 +70,6 @@ work:
     company_logo: 'https://www.inspirai.com/pc/images/common/logo1.svg'
     date_start: 2023-05-01
     date_end: 2023-08-31
-# 2022.11/2021.5 ACM-ICPC 国际大学生程序设计竞赛区域赛 队长 铜奖
-# 2020.9/2021.3 中国高校计算机大赛-团队天梯赛 团队队长 全国个人二等奖/团队三等奖
-# 2021.12 蓝桥杯全国总决赛 个人 一等奖
-# 2021.12 中国机器人及人工智能大赛全国总决赛 成员 一等奖
-# 2020.11 北京市数学建模竞赛 队长 一等奖
-# 2022.6 “挑战杯”首都大学生创业计划竞赛“青振京郊”专项赛 队长 铜奖
 awards:
   - title: 'The 2022 ICPC Asia Shenyang Regional Contest Bronze Medal'
     url: https://icpc.global/
