@@ -1,5 +1,5 @@
 ---
-title: L7
+title: 'L7'
 date: 2024-03-01
 lastmod: 2024-03-05
 author: ['Ysyy']

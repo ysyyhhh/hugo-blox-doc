@@ -1,5 +1,5 @@
 ---
-title: P0 [C++ Primer](https://15445.courses.cs.cmu.edu/fall2022/project0/)
+title: 'P0 [C++ Primer](https://15445.courses.cs.cmu.edu/fall2022/project0/)'
 date: 2024-03-01
 lastmod: 2024-03-05
 author: ['Ysyy']

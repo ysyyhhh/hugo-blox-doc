@@ -1,5 +1,5 @@
 ---
-title: lab2 key value server
+title: 'lab2 key value server'
 date: 2024-03-05
 lastmod: 2024-03-05
 author: ['Ysyy']

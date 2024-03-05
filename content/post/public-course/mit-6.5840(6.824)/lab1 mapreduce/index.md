@@ -1,5 +1,5 @@
 ---
-title: 6.5840 Lab 1: MapReduce
+title: '6.5840 Lab 1: MapReduce'
 date: 2024-03-05
 lastmod: 2024-03-05
 author: ['Ysyy']

@@ -1,5 +1,5 @@
 ---
-title: 杂
+title: '杂'
 date: 2023-07-23
 lastmod: 2024-03-05
 author: ['Ysyy']
