@@ -70,6 +70,20 @@ work:
     company_logo: 'https://www.inspirai.com/pc/images/common/logo1.svg'
     date_start: 2023-05-01
     date_end: 2023-08-31
+    summary: |2-
+      Project1: Text AVG Game (LLM Application)
+        - Description: A text adventure game that uses half-script and half-LLM generated plots.
+        - Work content: 
+          - Responsible for game backend development and configuration deployment, optimize the trigger mechanism, and responsible for the design and implementation of infinitely nested plot branch scripts.
+            - Technology stack: Python, FastAPI, Dapr, Kubernetes, Poetry, LangChain
+          - Independently responsible for exploring real-time generation of all plots, CG images, voice, and scoring for players
+            - Built based on LangChain, GPT-turbo, and Stable Diffusion
+          - Independently responsible for the development of the Telegram bot, realizing low-latency streaming reply, group chat/private chat mode, interactive mini-games, etc.
+      Project2: Life Restart Simulator Mini Program Game (LLM Application)
+        - Description: A life restart simulator that generates events and life summaries by LLM
+        - Work content:
+          - Responsible for backend development, technology stack FastAPI, implementation of continuous/interval trigger mechanism for special events, optimization of prompt, and maintenance of event library.
+          - Improve automated testing and write test cases using the pytest library. 
 awards:
   - title: 'The 2022 ICPC Asia Shenyang Regional Contest Bronze Medal'
     url: https://icpc.global/
@@ -84,52 +98,92 @@ awards:
     #   Learned:
     #   - Synthesize your own blockchain solutions
 # Skills
-# Add your own SVG icons to `assets/media/icons/`
-# - 编程语言&开发平台：java，python，C/C++, 主要在Linux环境下进行开发
-# - 后端框架: 熟悉 SpringBoot、SpringCloud，使用过FastAPI 、Django
-# - 前端框架：熟悉 Vue、uni-app、微信小程序，使用过QT框架、Swing
-# - CI/CD相关: 熟悉使用docker,使用过k8s, GitLab CI、GitHub Actions等
-# - 熟练使用Mysql，了解数据库优化原理，经常使用Redis、MinIO、MongoDB,熟悉设计模式
+# 编程语言&开发平台: Java，Python，C/C++, 主要在Linux环境下进行开发
+# 后端框架: 熟悉 SpringCloud 、SpringBoot、，使用过FastAPI	、Django
+# 前端框架: 熟悉 Vue、uni-app、微信小程序，使用过QT框架、Swing
+# 数据库: 熟练使用Mysql，了解数据库优化原理，经常使用Redis、MinIO、MongoDB, 
+# 分布式: 使用过Flask, Elasticsearch, RabbitMQ, Redis, Nacos
+# 部署: 熟练使用docker,使用过k8s, GitLab CI、GitHub Actions
+# 熟练掌握算法和数据结构知识，在ACM-ICPC等多项算法竞赛中获奖, 熟悉设计模式
+
 skills:
-  - name: programming language
+
+  - name: language && artitecture
     items:
       - name: Java
         description: ''
-        percent: 80
+        percent: 90
         icon: devicon/java
       - name: Python
         description: ''
-        percent: 80
+        percent: 90
         icon: devicon/python
       - name: C/C++
         description: ''
-        percent: 70
+        percent: 80
         icon: devicon/c
       - name: Go
         description: ''
         percent: 20
         icon: devicon/go
-
-  - name: Technical Skills
-    color: '#eeac02'
-    color_border: '#f0bf23'
-    items:
       - name: SpringCloud
         description: ''
+        percent: 80
+        icon: devicon/spring
+      - name: FastAPI
+        description: ''
         percent: 70
-        icon: spring
-      - name: docker
+        icon: devicon/python
+      - name: Django
+        description: ''
+        percent: 70
+        icon: devicon/django
+      - name: Vue
+        description: ''
+        percent: 70
+        icon: devicon/vuejs
+      # - name: uni-app
+      #   description: ''
+      #   percent: 70
+      #   icon: devicon/unidata
+      # - name: WeChat Mini Program
+      #   description: ''
+      #   percent: 70
+      #   icon: devicon/wechat
+  - name: Other
+    items:
+      - name: Mysql
+        description: ''
+        percent: 90
+        icon: devicon/mysql
+      - name: Redis
+        description: ''
+        percent: 80
+        icon: devicon/redis
+      - name: MongoDB
+        description: ''
+        percent: 60
+        icon: devicon/mongodb
+      - name: Flask
+        description: ''
+        percent: 60
+        icon: devicon/flask
+      - name: Elasticsearch
+        description: ''
+        percent: 60
+        icon: devicon/elasticsearch
+      - name: RabbitMQ
+        description: ''
+        percent: 80
+        icon: devicon/rabbitmq
+      - name: Docker
         description: ''
         percent: 80
         icon: devicon/docker
       - name: k8s
         description: ''
-        percent: 60
-        icon: kubernetes
-      - name: Mysql
-        description: ''
-        percent: 80
-        icon: devicon/mysql
+        percent: 70
+        icon: devicon/kubernetes
 
 # languages:
 #   - name: English

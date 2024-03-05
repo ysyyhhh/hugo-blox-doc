@@ -77,7 +77,7 @@ def adjust_docs(dir):
         root = os.path.join(dir, root)
         for name in dirs:
             # 生成_index.md
-            with open(os.path.join(root, name, '_index.md'), 'w') as f:
+            with open(os.path.join(root, name, '_index.md'), 'w', encoding='utf-8') as f:
                 f.write('---\n')
                 f.write('linkTitle: ' + name + '\n')
                 f.write('title: ' + name + '\n')
@@ -161,7 +161,7 @@ def sync():
     adjust_docs(root_docs_path)
     
     
-    with open(os.path.join(root_post_path, '_index.md'), 'w') as f:
+    with open(os.path.join(root_post_path, '_index.md'), 'w', encoding='utf-8') as f:
         # ---
         # title: Blog
         # view: date-title-summary
@@ -177,11 +177,12 @@ def sync():
   
     # os.chdir('./content/posts/')
     
-    # os.chdir(root_path)
-    # os.system('git add ./content/posts/')
-    # os.system('git commit -m "update"')
-    # os.system('git push')
-    # print('sync done')
+    os.chdir(root_path)
+    os.system('git add ./content/post/')
+    os.system('git add ./content/docs/')
+    os.system('git commit -m "update"')
+    os.system('git push')
+    print('sync done')
   
 if __name__ == '__main__':
     sync()  

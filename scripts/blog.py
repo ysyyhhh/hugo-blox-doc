@@ -112,7 +112,7 @@ class Article:
 
     def load_head(self):
         self.head = head.copy()
-        self.head["title"] = self._get_title()
+        self.head["title"] = "\'"+self._get_title() + "\'"
         self.head["tags"] = self._get_tags()
         self.head["categories"] = self._get_categories()
         self.head["description"] = "\'"+self.get_description()+"\'"
