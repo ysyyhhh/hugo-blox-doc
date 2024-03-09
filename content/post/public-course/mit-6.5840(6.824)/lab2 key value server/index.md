@@ -1,7 +1,7 @@
 ---
 title: 'lab2 key value server'
 date: 2024-03-05
-lastmod: 2024-03-07
+lastmod: 2024-03-09
 author: ['Ysyy']
 categories: ['']
 tags: ['mit-6.5840(6.824)']
