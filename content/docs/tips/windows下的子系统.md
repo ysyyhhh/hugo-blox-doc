@@ -5,3 +5,9 @@
 pass
 
 ## 适用于Android的Windows子系统
+
+安装apk
+
+```shell
+adb install xxx.apk
+```
