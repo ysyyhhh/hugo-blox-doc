@@ -10,16 +10,299 @@
 
 ## 链表
 
+```C++
+struct node {
+    int x_;
+    node* nex_ = nullptr; //需要初始化
+    node(int x)
+    {
+        x_ = x;
+    }
+    node() { }
+};
+```
+
 ### 链表翻转 空间O(1) 时间O(n)
+[例题](https://leetcode.cn/problems/reverse-linked-list-ii/)
 
 ### 归并排序链表O(n) 时间O(nlogn)
+[例题](https://www.luogu.com.cn/problem/P1177)
+```C++
 
+node* merge(node* ha, node* hb)
+{
+    node* head = new node();
+    node* now = head;
+    node* na = ha->nex_;
+    node* nb = hb->nex_;
+    while (na != nullptr && nb != nullptr) {
+        if (na->x_ < nb->x_) {
+            now->nex_ = na;
+            na = na->nex_;
+        } else {
+            now->nex_ = nb;
+            nb = nb->nex_;
+        }
+        now = now->nex_;
+    }
+    if (na != nullptr) {
+        now->nex_ = na;
+    }
+    if (nb != nullptr) {
+        now->nex_ = nb;
+    }
+    return head;
+}
+node* sort(node* head)
+{
+
+    if (head->nex_ == nullptr || head->nex_->nex_ == nullptr)
+        return head;
+    // traverse(head);
+    //split 交替
+    node* ha = head;
+    node* hb = new node();
+
+    node* now = head->nex_;
+    node* nb = hb;
+    node* na = ha;
+    bool oe = 0;
+    while (now != nullptr) {
+        if (oe) {
+            nb->nex_ = now;
+            nb = now;
+        } else {
+            na->nex_ = now;
+            na = now;
+        }
+        now = now->nex_;
+        oe = !oe;
+    }
+    na->nex_ = nullptr;
+    nb->nex_ = nullptr;
+
+    hb = sort(hb);
+    ha = sort(ha);
+
+    // return head;
+    return merge(ha, hb);
+}
+
+```
+## 数据结构(树状数组)
+
+### 单点加,区间和
+[树状数组1例题](https://www.luogu.com.cn/problem/P3368)
+```C++
+#include <cstdio>
+#include <iostream>
+using namespace std;
+typedef long long ll;
+const int N = 1e6 + 7;
+
+int n;
+int a[N], t[N];
+
+inline int lowbit(int x)
+{
+    return x & -x;
+}
+void add(int k, int x)
+{
+    for (k; k <= n; k += lowbit(k)) {
+        t[k] += x;
+    }
+}
+int sum(int r)
+{
+    int res = 0;
+    for (r; r > 0; r -= lowbit(r)) {
+        res += t[r];
+    }
+    return res;
+}
+int sum(int l, int r)
+{
+    return sum(r) - sum(l - 1);
+}
+
+void build()
+{
+    //O(n)
+    for (int i = 1; i <= n; i++) {
+        t[i] += a[i];
+        int j = i + lowbit(i);
+        if (j <= n) {
+            t[j] += t[i];
+        }
+    }
+}
+
+int main()
+{
+    int m;
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &a[i]);
+    }
+    build();
+    for (int i = 1; i <= m; i++) {
+        int op;
+        scanf("%d", &op);
+        if (op == 1) {
+            int x, k;
+            scanf("%d%d", &x, &k);
+            add(x, k);
+        } else {
+            int l, r;
+            scanf("%d%d", &l, &r);
+            printf("%d\n", sum(l, r));
+        }
+    }
+    return 0;
+}
+```
+
+### 区间改,单点查
+[树状数组2例题](https://www.luogu.com.cn/problem/P3368)
+
+把原数组不做任何处理.
+树状数组维护一个前缀和数组(初始为0).
+
+把区改变成端点处的单改
+单查变成区查
+
+```C++
+#include <cstdio>
+#include <iostream>
+using namespace std;
+typedef long long ll;
+const int N = 1e6 + 7;
+
+int n;
+int a[N], t[N];
+
+inline int lowbit(int x)
+{
+    return x & -x;
+}
+void add(int k, int x)
+{
+    for (k; k <= n; k += lowbit(k)) {
+        t[k] += x;
+    }
+}
+void add(int l, int r, int x)
+{
+    //要使得 sum(r) - sum(l-1) 加了x的话，需要在l处+x，同时在r+1处-x
+    add(l, x);
+    add(r + 1, -x);
+}
+ll sum(int r)
+{
+    ll res = 0;
+    for (r; r > 0; r -= lowbit(r)) {
+        res += t[r];
+    }
+    return res;
+}
+int main()
+{
+    int m;
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &a[i]);
+    }
+    for (int i = 1; i <= m; i++) {
+        int op;
+        scanf("%d", &op);
+        if (op == 1) {
+            int x, y, k;
+            scanf("%d%d%d", &x, &y, &k);
+            add(x, y, k);
+        } else {
+            int x;
+            scanf("%d", &x);
+            printf("%lld\n", a[x] + sum(x));
+        }
+    }
+    return 0;
+}
+```
 ## 排序
+
+[例题](https://www.luogu.com.cn/problem/P1177)
 
 ### 手写快排
 
-### [无序数组中找第k大数](https://leetcode.cn/problems/kth-largest-element-in-an-array/)  O(n)
+### 归并排序(求逆序对)
 
+[求逆序对](https://www.luogu.com.cn/problem/P1908)
+```C++
+#include <cstdio>
+#include <iostream>
+using namespace std;
+typedef long long ll;
+const int N = 5e6 + 7;
+
+ll ans;
+
+int tmp[N], a[N];
+
+void merge(int* a, int l, int r, int mid)
+{
+    int ti = l;
+    int li = l, ri = mid + 1;
+    while (li <= mid && ri <= r) {
+        int lw = a[li], rw = a[ri];
+        if (lw <= rw) {
+            tmp[ti++] = a[li++];
+        } else {
+            tmp[ti++] = a[ri++];
+            //按理来说，右边的数组应该在左边所有都放完再放
+            //因此，如果提前放了，那么剩下左边有多少个没放的 都 和它组成一个逆序对
+            //即 mid-li+1
+            ans += mid - li + 1;
+        }
+    }
+    while (li <= mid)
+        tmp[ti++] = a[li++];
+    while (ri <= r)
+        tmp[ti++] = a[ri++];
+
+    for (int i = l; i <= r; i++) {
+        a[i] = tmp[i];
+    }
+}
+
+void sort(int* a, int l, int r)
+{
+    if (l >= r)
+        return;
+    // cout << l << " " << r << endl;
+    int mid = (l + r) / 2;
+    sort(a, l, mid);
+    sort(a, mid + 1, r);
+    merge(a, l, r, mid);
+}
+int main()
+{
+    int n;
+    cin >> n;
+    for (int i = 1; i <= n; i++) {
+        scanf("%d", &a[i]);
+    }
+
+    sort(a, 1, n);
+
+    cout << ans;
+
+    return 0;
+}
+```
+
+### 第k大数 O(n)
+[例题](https://leetcode.cn/problems/kth-largest-element-in-an-array/)
 补充: 第K大数,而不是第K个不同的数.
 
 和求排序后的第k个数本质一致,转换一下即可.
@@ -111,6 +394,48 @@ N<100 ,Σwi < 1e5
 
 #### 小凯的疑惑
 
+
+
+
+
+# STL用法
+
+
+[Vector代替平衡树](https://www.luogu.com.cn/article/ig60mcky)
+1.插入一个数 x。
+2.删除一个数 x(若有多个相同的数，应只删除一个)
+3.查询 x 的排名(定义排名为比当前数小的数的个数+1)
+4.查询数据结构中排名为 x 的数。
+5.求 x 的前驱(前驱定义为小于x，且最大的数)
+6.求 x 的后继(后继定义为大于x，且最小的数)
+
+```C++
+scanf("%d%d",&op,&x);
+if(op==1)
+    s.insert(upper_bound(s.begin(),s.end(),x),x);
+if(op==2)
+    s.erase(lower_bound(s.begin(),s.end(),x));
+if(op==3)
+    printf("%d\n",lower_bound(s.begin(),s.end(),x)-s.begin()+1);
+if(op==4)
+    printf("%d\n",s[x-1]);
+if(op==5)
+    printf("%d\n",*--(lower_bound(s.begin(),s.end(),x)));
+if(op==6)
+    printf("%d\n",*(upper_bound(s.begin(),s.end(),x)));
+```
+
+vector的查找和插入
+
+```C++
+bool cmp(int a1,int a2){
+  return a1 > a2;
+}
+vector<int>a;
+int in = lower_bound(a.begin(),a.end(),x,cmp) - a.begin();
+```
+
+
 # 思维题
 
 #### 小球称重问题
@@ -122,6 +447,7 @@ N<100 ,Σwi < 1e5
 # NP问题
 
 ## 集合覆盖问题
+
 
 
 
