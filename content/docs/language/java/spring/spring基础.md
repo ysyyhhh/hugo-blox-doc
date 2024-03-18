@@ -1,3 +1,51 @@
+# Spring 基础
+
+
+### Spring常见的一些模块
+
+
+Spring 支持
+- IoC（Inversion of Control:控制反转） 
+- AOP(Aspect-Oriented Programming:面向切面编程)
+
+Spring模块：
+- Spring Core Container：核心容器， 提供IoC容器的基本功能
+  - spring-core：Spring 框架基本的核心工具类。
+  - spring-beans：提供对 bean 的创建、配置和管理等功能的支持。
+  - spring-context：提供对国际化、事件传播、资源加载等功能的支持。
+  - spring-expression：提供对表达式语言（Spring Expression Language） SpEL 的支持，只依赖于 core 模块，不依赖于其他模块，可以单独使用。
+- Spring AOP：提供面向切面编程的功能
+  - spring-aop：提供对 AOP 的支持。
+  - spring-aspects：提供对 AspectJ 的支持。
+- Spring Data Access/Integration：提供对数据库操作、事务管理、消息处理等功能的支持
+  - spring-jdbc：提供对 JDBC 的支持。
+  - spring-tx：提供对事务管理的支持。
+  - spring-orm：提供对 ORM 工具的支持。
+  - spring-oxm：提供对 Object/XML 映射的支持。
+  - spring-jms：提供对 JMS 的支持。
+  - spring-web：提供对 Web 应用的支持。
+  - spring-webmvc：提供对 Web MVC 的支持。
+  - spring-websocket：提供对 Web Socket 的支持。
+  - spring-webflux：提供对 Web Flux 的支持。
+- Spring Web：提供对 Web 应用的支持
+  - spring-web：提供对 Web 应用的支持。
+  - spring-webmvc：提供对 Web MVC 的支持。
+  - spring-websocket：提供对 Web Socket 的支持。
+  - spring-webflux：提供对 Web Flux 的支持。
+- Spring Test：提供对单元测试和集成测试的支持
+  - spring-test：提供对测试的支持。
+
+### Spring Spring MVC Spring Boot的关系
+
+Spring是一个开源框架
+Spring MVC是Spring框架的一个模块
+Spring Boot是Spring框架的一个子项目。
+- 简化了Spring MVC的配置
+
+
+
+
+
 
 #### 介绍一下springboot
 
