@@ -16,6 +16,17 @@ Spring 3.0 引入了Java配置的方式，可以完全不使用XML配置
 - 事务管理
 - SpringMVC
 
+
+### Spring声明周期
+
+- Spring容器的生命周期
+  - 创建容器
+  - 初始化容器
+  - 使用容器
+  - 销毁容器
+
+
+
 ### 常见的一些模块
 
 
@@ -56,9 +67,6 @@ Spring是一个开源框架
 Spring MVC是Spring框架的一个模块
 Spring Boot是Spring框架的一个子项目。
 - 简化了Spring MVC的配置
-
-
-
 
 
 ### springboot

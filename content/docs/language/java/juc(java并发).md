@@ -194,6 +194,7 @@ public class Main {
 - 保存和恢复内存映射表
 
 ### 线程死锁
+
 四个条件： 互斥条件、请求与保持条件、不剥夺条件、循环等待条件
 
 #### 预防和避免
@@ -206,11 +207,6 @@ public class Main {
 避免死锁是通过银行家算法来实现的。
 - 银行家算法是一种避免死锁的算法，它通过判断系统是否处于安全状态来避免死锁。
 - 银行家算法的核心思想是：当一个进程申请资源时，系统会先判断该进程申请资源后系统是否处于安全状态，如果是则分配资源，否则等待。
-
-
-
-
-
 
 ## JMM
 
@@ -390,6 +386,12 @@ flag = true;          //语句2
 
 #### TODO: vloatile 实现原理
 
+在Java 中，当线程读取一个volatile 变量时，会从主内存中读取变量的最新值，并把它存储到线程的工作内存中。 
+
+volatile主要通过汇编lock前缀指令，它会锁定当前内存区域的缓存（缓存行），并且立即将当前缓存行数据写入主内存（耗时非常短）
+
+当线程写入一个volatile 变量时，会把变量的值写入到线程的工作内存中，并**强制将这个值刷新到主内存中**。 
+
 #### 为什么vloatile不能保证原子性
 
 ```java
@@ -484,6 +486,7 @@ final方法可以被重载吗?
 修饰变量
 - final修饰的字段**不都是编译期常量**
 - 但是final修饰的字段**只能被赋值一次**
+
 ```java
 public class Test {
     //编译期常量
@@ -743,7 +746,7 @@ public static void main(String[] args) {
 
 #### synchronized 和 ReentrantLock 的区别
 
-- 锁的实现: synchronized是Java的关键字, 是JVM层面的锁, 是隐式的, 不需要用户去手动释放锁; ReentrantLock是JUC包中的类, 是API层面的锁, 是显式的, 需要用户去手动释放锁.
+- 锁的实现: synchronized是Java的关键字, 是JVM层面的锁, 是隐式的, **不需要用户去手动释放锁**; ReentrantLock是JUC包中的类, 是API层面的锁, 是显式的, 需要用户去手动释放锁.
 - 性能: synchronized的性能在JDK6之后得到了很大的提升, 但是在并发量很高的情况下, ReentrantLock的性能要优于synchronized.(优化后大致相同)
 - 等待可中断: 使用synchronized时, 如果获取不到锁, 线程会一直等待, 不能够中断; 使用ReentrantLock时, 可以设置超时时间, 可以中断.
 - 公平锁: ReentrantLock**可以设置为公平锁**, synchronized是非公平锁.

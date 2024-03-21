@@ -113,6 +113,16 @@ cp -rp source dest
 # 远程连接复制文件
 scp -r username@ip:/home/username/data /home/username/data
 
+
+# 权限设置
+chmod 777 filename
+# 参数解释
+# 7: 111 读写执行
+# 6: 110 读写
+# 5: 101 读执行
+
+# 三位数分别代表所有者、所属组、其他用户的权限
+# 读、写、执行分别用4、2、1表示
 ```
 
 ## 工具

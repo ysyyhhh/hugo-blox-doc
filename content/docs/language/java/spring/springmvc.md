@@ -34,39 +34,22 @@ SpringMVC的核心组件有：
 - Handler: 处理器，用于处理请求
 - ViewResolver: 视图解析器，用于解析视图
 
-
-
 ## SpringMVC的工作流程(mvc的dispatcherservlet的分派原理)
 
 ![](img/SpringMVC/SpringMVC工作流程.png)
 
-1. 浏览器发送请求, `DispatcherServlet` 拦截请求
-2. `DispatcherServlet` 根据请求信息调用 `HandlerMapping`
-   1. `HandlerMapping` 根据URL找到对应的 `Handler`,即Controller
-3. `DispatcherServlet` 调用 `HandlerAdapter`
-   1. `HandlerAdapter` 执行 `Handler`
-4. `Handler` 执行完毕返回 `ModelAndView`
-5. `DispatcherServlet` 调用 `ViewResolver`
-   1. `ViewResolver` 解析 `ModelAndView` 返回 `View`
-6. `DispatcherServlet` 把ModelAndView传给View
-   1. `View` 渲染数据并返回给 `DispatcherServlet`
-7. `DispatcherServlet` 把 `View` 返回给浏览器
-
-
-![image-20230413193651300](4.13滴滴准备/img/image-20230413193651300.png)
-
-1. 用户发送 请求到 前端控制器（DispatcherServlet）。
-2. 前端控制器 请求 **处理器映射器**（HandlerMapping）去 查找 处理器（Handler）。
-3. 找到以后 处理器映射器（HandlerMappering）向 前端控制器 返回 执行链（HandlerExecutionChain）。
-4. 前端控制器（DispatcherServlet）调用 **处理器适配器**（HandlerAdapter） 去执行 处理器（Handler）。
-5. 处理器适配器 去执行 处理器Handler。
-6. 处理器 执行完给 处理器适配器 返回ModelAndView。
-7. **处理器适配器** 向 前端控制器 返回ModelAndView。
-8. 前端控制器 请求 **视图解析器**（ViewResolver）去进行 视图解析。
-9. 视图解析器 向 前端控制器返回View。
-10. 前端控制器 对 **视图进行渲染**。
-11. 前端控制器 向用户**响应结果**。
-
+1. 客户端发送请求到前端控制器 `DispatcherServlet`。
+2. 获得Controller
+   1. `DispatcherServlet` 根据请求信息 (URI 等)，决定使用哪个 `HandlerMapping` 来映射 Controller。
+   2. `HandlerMapping` 获取到对应的 `Controller` 后,返回给 `DispatcherServlet`
+3. 调用Controller的方法
+   1. `DispatcherServlet` 根据获得的 `Controller` 来调用对应的方法。
+   2. `Controller` 执行相应的业务逻辑,处理完后返回一个 `ModelAndView` 对象给 `DispatcherServlet`。
+4. 根据`ModelAndView`找到`View`
+   1. `DispatcherServlet` 将获得的 `ModelAndView` 对象传递给 `ViewResolver`。
+   `ViewResolver` 根据之前配置好的规则,解析`ModelAndView`对象中的视图名,找到真正的视图对象View。
+   2. `DispatcherServlet` 调用 View 对象进行视图渲染,得到最终的视图。
+5. 最终的视图通过响应对象返回给客户端。
 
 ## restful风格在mvc的分派，如何解析参数（这个我不知道瞎答的）
 

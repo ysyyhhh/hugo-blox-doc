@@ -2,32 +2,37 @@
 
 ## 什么是AOP
 
-AOP（Aspect-Oriented Programming）面向切面编程，是一种编程范式，它的主要目的是提高代码的模块化程度，使得代码更加易于维护和扩展。
+AOP（Aspect-Oriented Programming）**面向切面编程**，是一种编程范式，它的主要目的是**提高代码的模块化程度**，使得代码更加易于维护和扩展。
 
-将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性。
+将那些与业务无关，却为业务模块**所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来**，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性。
 
-Manager层的事务管理、日志管理、权限控制等功能，都是与业务逻辑无关的，但是却是业务逻辑所必须的，这些功能可以通过AOP来实现。
+Manager层的**事务管理、日志管理、权限控制**等功能，都是与业务逻辑无关的，但是却是业务逻辑所必须的，这些功能可以通过AOP来实现。
 
-AOP的实现方式有两种：动态代理和CGLIB字节码增强。
-- 如果目标对象实现了接口，Spring就会使用JDK的动态代理
-- 如果目标对象没有实现接口，Spring就会使用CGLIB字节码增强
 
-![](img/SpringAOP/AOP%20Process.png)
-
-Spring AOP也集成了AspectJ，可以使用AspectJ的注解来实现AOP。
 
 ## AOP的核心概念
 
 - Aspect（切面）：横切关注点，即模块化横切关注点的行为。比如日志、事务、权限等 = Advice + Pointcut
-- Joinpoint（连接点）：程序执行的某个特定的点，比如方法的调用、异常的处理等
-- Pointcut（切入点）：匹配连接点的断言，AOP通过切入点定位到连接点
+- JoinPoint（连接点）：程序执行的某个特定的点，比如方法的调用、异常的处理等
+- PointCut（切入点）：匹配连接点的断言，AOP通过切入点定位到连接点
 - Advice（通知）：切面在连接点上执行的动作，分为前置通知、后置通知、环绕通知、异常通知、最终通知
 - Introduction（引介）：在不修改类代码的前提下，为类添加新的方法和属性
 - Target（目标对象）：被代理的对象
 - Weaving（织入）：将切面应用到目标对象并创建新的代理对象的过程
 - Proxy（代理）：被AOP框架创建的对象，用来替换原始对象
 
-## Spring AOP 和 AspectJ 
+## AOP的实现方法
+
+AOP的实现方式有两种：动态代理和CGLIB字节码增强。
+- 如果目标对象实现了接口，Spring就会使用JDK的动态代理
+- 如果目标对象没有实现接口，Spring就会使用CGLIB字节码增强
+
+
+![](img/SpringAOP/AOP%20Process.png)
+
+Spring AOP也集成了AspectJ，可以使用AspectJ的注解来实现AOP。
+
+Spring AOP 和 AspectJ 
 
 - Spring AOP：基于代理的AOP实现，只支持方法级别的连接点
 - AspectJ：基于字节码的AOP实现，支持方法级别和字段级别的连接点
@@ -39,6 +44,66 @@ AspectJ的通知类型:
 - AfterReturning：返回通知, 在方法返回结果后执行
 - AfterThrowing：异常通知, 在方法抛出异常后执行
 - Around：环绕通知, 在方法执行前后执行
+
+## AOP实战
+
+```java
+// 日志注解
+@Target({ElementType.PARAMETER,ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Log {
+
+    /**
+     * 描述
+     */
+    String description() default "";
+
+    /**
+     * 方法类型 INSERT DELETE UPDATE OTHER
+     */
+    MethodType methodType() default MethodType.OTHER;
+}
+
+// 日志切面
+@Component
+@Aspect
+public class LogAspect {
+  // 切入点，所有被 Log 注解标注的方法
+  @Pointcut("@annotation(cn.javaguide.annotation.Log)")
+  public void webLog() {
+  }
+
+   /**
+   * 环绕通知
+   */
+  @Around("webLog()")
+  public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
+    // 省略具体的处理逻辑
+  }
+
+  // 省略其他代码
+}
+```
+
+```java
+@Log(description = "method1",methodType = MethodType.INSERT)
+public CommonResponse<Object> method1() {
+      // 业务逻辑
+      xxService.method1();
+      // 省略具体的业务处理逻辑
+      return CommonResponse.success();
+}
+```
+
+## AOP的应用场景
+
+- 日志记录: 自定义日志记录注解
+- 性能统计: 利用AOP统计方法的执行时间
+- 事务管理: @Transactional注解就是基于AOP实现的
+- 权限控制: 利用注解在目标方法前判断用户所需的权限
+  - Spring Security中的@PreAuthorize注解
+
 
 ## 多个切面的执行顺序
 
@@ -62,7 +127,6 @@ public class LogAspect implements Ordered {
     }
 }
 ```
-
 
 
 ## 切面、Filter、Interceptor

@@ -1,17 +1,17 @@
- Spring IOC
+# Spring IOC
 
 什么是IOC
 - Inversion of Control 控制反转 
-- 控制权由程序员转交给了Spring容器，由Spring容器来实例化对象，而不是由程序员来实例化对象
+- **控制权由程序员转交给了Spring容器**，**由Spring容器来实例化对象**，而不是由程序员来实例化对象
 
 控制：对象创建（实例化、管理）的控制权
 反转：由程序员转交给了外部环境（Spring，IOC容器）
 
-当我们需要创建一个对象时，只需要配置好配置文件/注解
+当我们**需要创建一个对象时，只需要配置好配置文件/注解**
 
 ## Spring IOC容器
 
-IOC容器是Map类型的对象，存储了所有的bean对象，key是bean的id，value是bean对象
+IOC容器是**Map类型的对象**，存储了所有的bean对象，key是bean的id，value是bean对象
 
 两种配置Bean的方式：
 - XML配置
@@ -21,8 +21,6 @@ IOC容器是Map类型的对象，存储了所有的bean对象，key是bean的id�
 ## Spring Bean
 
 Bean是被IoC容器管理的对象，Bean是一个Java对象，由Spring容器实例化、装配、管理
-
-
 
 ## 声明为Bean的注解
 
@@ -42,10 +40,9 @@ Bean是被IoC容器管理的对象，Bean是一个Java对象，由Spring容器�
 - 用于标注一个Controller层的bean
 
 
-
 @Component和@Bean的区别
-- @Component是用于标注一个普通的bean，作用于类；而@Bean是用于标注一个方法，作用于方法
-- @Component是被Spring扫描到之后（@ComponentScan），自动注册到Spring容器中；而@Bean是在配置类中，手动注册到Spring容器中
+- @Component是用于标注一个普通的bean，作用于**类**；而@Bean是用于标注一个方法，作用于**方法**
+- @Component是被Spring扫描到之后（@ComponentScan），**自动注册**到Spring容器中；而@Bean是在配置类中，**手动注册**到Spring容器中
 - @Bean自定义性强，比如在引用第三方库的时候，可以使用@Bean注解，将第三方库的对象注册到Spring容器中
 
 ```Java
@@ -83,11 +80,12 @@ public class AppConfig {
 - 因为@Component是用于标注一个普通的bean，作用于类；而@Bean是用于标注一个方法，作用于方法
 
 ## 注入Bean的注解
+
 Spring内置的@Autowired注解
 JDK内置的@Resource注解和@Inject注解
 
 @Autowired和@Resource的区别
-- AutoWired的默认是按照类型注入
+- AutoWired的默认是**按照类型注入**
   - 如果有多个类型一样的bean，会变成按照名称注入
 - Resource默认是按照名称注入，如果没有指定name属性，会按照类型注入
 - 如果存在多个实现类, Autowired需要@Qualifier指定具体的实现类，而Resource需要name指定具体的实现类
