@@ -885,8 +885,10 @@ public void set(T value) {
 
 ThreadLocalMap中的Entry的key是弱引用, value是强引用, 如果key被回收了, value不会被回收, 会导致内存泄漏.
 
+只要线程还在, ThreadLocalMap中的Entry就不会被回收.
+
 解决方法:
-在使用完ThreadLocal后, 调用remove方法, 将Entry的key置为null, 这样就可以被回收了.
+在使用完ThreadLocal后, 调用remove方法.
 
 
 
@@ -903,8 +905,6 @@ ThreadLocalMap中的Entry的key是弱引用, value是强引用, 如果key被回�
 #### Executor框架
 
 Executor 管理多个异步任务的执行，而无需程序员显式地管理线程的生命周期。这里的异步是指多个任务的执行互不干扰，不需要进行同步操作。
-
-
 
 三种Executor:
 - CachedThreadPool：一个任务创建一个线程
@@ -1379,11 +1379,6 @@ Java中提供了多种线程池实现，包括ThreadPoolExecutor、ScheduledThre
 使用的是无界的DelayedWorkQueue，队列最大长度为Integer.MAX_VALUE，可能会堆积大量的请求，从而导致OOM。
 
 
-
-1个10G大小文件，如何得前100个最大数字
-\
-
-
 ### 线程池饱和策略
 
 AbortPolicy：直接抛出RejectedExecutionException异常。
@@ -1394,7 +1389,7 @@ DiscardPolicy：直接丢弃任务，不做任何处理。
 ### 线程池参数
 
 最重要的三个
-- corePoolSize：核心线程数，即线程池中保留的线程数。
+- corePoolSize：核心线程数，即线程池中保留的线程数, 至少的线程数.
 - maximumPoolSize：最大线程数，即线程池中允许的最大线程数。
 - workQueue：任务队列，用于存储等待执行的任务。
 
