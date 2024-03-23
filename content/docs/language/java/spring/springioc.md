@@ -17,7 +17,6 @@ IOC容器是**Map类型的对象**，存储了所有的bean对象，key是bean�
 - XML配置
 - 注解配置
 
-
 ## Spring Bean
 
 Bean是被IoC容器管理的对象，Bean是一个Java对象，由Spring容器实例化、装配、管理
