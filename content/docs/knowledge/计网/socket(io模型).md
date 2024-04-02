@@ -2,7 +2,28 @@
 
 ## 一、什么是I/O模型 及 I/O模型的分类
 
-## 二、I/O 多路复用
+Unix 有五种 I/O 模型：
+
+阻塞式 I/O
+非阻塞式 I/O
+I/O 复用（select 和 poll）
+信号驱动式 I/O（SIGIO）
+异步 I/O（AIO）
+
+
+## I/O 多路复用
+
+它可以让单个进程具有处理多个 I/O 事件的能力。又被称为 Event Driven I/O，即事件驱动 I/O。
+
+### select
+
+### poll
+
+### epoll
+
+
+
+
 
 ## 三、实际应用
 

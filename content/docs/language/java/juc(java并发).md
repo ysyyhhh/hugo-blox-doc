@@ -1430,7 +1430,6 @@ DiscardPolicy：直接丢弃任务，不做任何处理。
 
 可以使用 PriorityBlockingQueue 来存储任务，然后自定义任务类实现 Comparable 接口，根据优先级来排序。
 
-
 ### 如何解决OOM
 
 OOM：OutOfMemoryError
@@ -1535,4 +1534,5 @@ CLH队列是一个虚拟的双向队列（虚拟的双向队列即不存在队�
 
 
 ## JUC工具类
+
 

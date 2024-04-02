@@ -68,6 +68,23 @@ LinkedList
 - 头部和尾部的插入删除都是O(1)
 - 一般不使用,作者都不使用
 
+
+
+### ArrayList
+底层是动态数组
+
+Q:声明arraylist，java语言会做什么操作
+A:声明ArrayList时，Java会创建一个长度为0的数组，当第一次添加元素时，会创建一个长度为10的数组，并将元素添加到数组中。当数组长度不够时，会创建一个原数组长度的1.5倍的新数组，并将原数组中的元素复制到新数组中。
+
+arraylist什么时候扩容
+A:ArrayList在添加元素时，会先判断当前数组的容量是否足够，如果不够则会进行扩容。扩容时，会创建一个原数组长度的1.5倍的新数组，并将原数组中的元素复制到新数组中。
+
+arraylist是线程安全的吗
+A:ArrayList是非线程安全的，如果需要在多线程环境下使用ArrayList，可以使用Collections.synchronizedList()方法将ArrayList转换为线程安全的List。
+
+线程安全的list有哪些
+A:线程安全的List有Vector和Collections.synchronizedList()方法转换的List。Vector是一种线程安全的List实现，而Collections.synchronizedList()方法可以将ArrayList转换为线程安全的List。
+
 ## Set
 
 对集合进行排序时,需要实现Comparable接口,重写compareTo方法
@@ -142,6 +159,20 @@ put原理
 
 同时还有一个区别：发生“hash冲突”时，我们上面的做法是“头插法”，这是jdk1.7的做法，而在jdk1.8中，使用的是“尾插法”。
 
+#### hash冲突解决方案
+
+- 开放定址法
+  - 线性探测法
+  - 二次探测法
+  - 伪随机
+- 链地址法
+  - 相同的hash值的元素，用链表存储
+- 再哈希法
+  - 提供多个hash函数
+- 建立公共溢出区
+  - 将哈希表分为基本表和溢出表两部分，凡是和基本表发生冲突的元素，一律填入溢出表。
+  - 在查找的时候，先与哈希表的相应位置比较，如果查找成功，则返回。否则去公共溢出区按顺序一一查找。在冲突数据少时性能好，冲突数据多的时候耗时。
+
 #### hashmap底层实现
 
 HashMap是一种基于哈希表的Map实现，其底层实现主要包括数组和链表（或红黑树）两部分。数组用来存储哈希桶，链表（或红黑树）用来解决哈希冲突。
@@ -160,6 +191,8 @@ HashMap1.7和1.8的主要区别在于底层实现方式的改变。1.7中使用�
 
 #### hashmap怎么让他线程安全的方法
 
+线程安全的map有哪些
+
 HashMap本身是非线程安全的，如果需要在多线程环境下使用HashMap，可以使用以下几种方法来保证线程安全：
 
 1. 使用Collections.synchronizedMap()方法将HashMap转换为线程安全的Map。
@@ -173,6 +206,9 @@ HashMap本身是非线程安全的，如果需要在多线程环境下使用Hash
 
 ConcurrentHashMap 已经摒弃了 Segment 的概念，而是直接用 Node 数组+链表+红黑树的数据结构来实现，并发控制使用 synchronized 和 CAS 来操作。
 
+13、concurrenthashmap最耗时的操作是什么
+
+12、hashtable和concurrenthashmap的区别
 
 红黑树可用别的数据结构代替吗
 
