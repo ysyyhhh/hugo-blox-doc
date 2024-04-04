@@ -120,9 +120,19 @@ private SmsService smsServiceImpl1;
 private SmsService smsService;
 ```
 
+## 注入Bean冲突时的问题
+当我们从 Spring 容器中“拉”取一个 Bean 回来的时候，可以按照名字去拉取，也可以按照类型去拉取，按照 BeanName 拉取的话，一般来说只要 BeanName 书写没有问题，都是没问题的。但是如果是按照类型去拉取，则可能会因为 Bean 存在多个实例从而导致失败。
+
+使用@Resource
+
+@Qualifier 指定 name
+
+另外还有一种方案，就是在注册 Bean 的时候，告诉 Spring 容器，这个 Bean 在通过 type 进行注入的时候，不作为候选 Bean。
+
 ## 怎么动态获取spring容器里面的bean，从哪个类中获取
 
 从ApplicationContext中获取Bean
+
 
 ## Bean的作用域
 

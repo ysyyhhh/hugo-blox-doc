@@ -370,7 +370,7 @@ flag = true;          //语句2
   - 通过volatile关键字来保证**一定的有序性**。
   - 通过synchronized关键字来保证**有序性**。
 
-### vloatile关键字
+### volatile关键字
 
 #### 作用
 
@@ -384,7 +384,7 @@ flag = true;          //语句2
 禁止指令重排
 将变量声明为 volatile ，在对这个变量进行读写操作的时候，会通过**插入特定的内存屏障** 的方式来禁止指令重排序。
 
-#### TODO: vloatile 实现原理
+#### TODO: volatile 实现原理
 
 在Java 中，当线程读取一个volatile 变量时，会从主内存中读取变量的最新值，并把它存储到线程的工作内存中。 
 
@@ -392,7 +392,7 @@ volatile主要通过汇编lock前缀指令，它会锁定当前内存区域的�
 
 当线程写入一个volatile 变量时，会把变量的值写入到线程的工作内存中，并**强制将这个值刷新到主内存中**。 
 
-#### 为什么vloatile不能保证原子性
+#### 为什么volatile不能保证原子性
 
 ```java
 public class VolatileExample {
