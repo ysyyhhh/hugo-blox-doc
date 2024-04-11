@@ -25,10 +25,18 @@ I/O 复用（select 和 poll）
 
 
 
-## 三、实际应用
+## 实际应用
 
 ### Reactor模式
 
 ### Proactor模式
 
 ### 事件驱动模式
+
+## Socket
+
+Socket listen怎么监听到TCP连接
+
+释放连接的状态转换
+
+

@@ -121,6 +121,7 @@ private SmsService smsService;
 ```
 
 ## 注入Bean冲突时的问题
+
 当我们从 Spring 容器中“拉”取一个 Bean 回来的时候，可以按照名字去拉取，也可以按照类型去拉取，按照 BeanName 拉取的话，一般来说只要 BeanName 书写没有问题，都是没问题的。但是如果是按照类型去拉取，则可能会因为 Bean 存在多个实例从而导致失败。
 
 使用@Resource

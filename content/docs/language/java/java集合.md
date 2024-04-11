@@ -73,18 +73,22 @@ LinkedList
 ### ArrayList
 底层是动态数组
 
-Q:声明arraylist，java语言会做什么操作
+#### 声明arraylist，java语言会做什么操作
 A:声明ArrayList时，Java会创建一个长度为0的数组，当第一次添加元素时，会创建一个长度为10的数组，并将元素添加到数组中。当数组长度不够时，会创建一个原数组长度的1.5倍的新数组，并将原数组中的元素复制到新数组中。
 
-arraylist什么时候扩容
+#### arraylist什么时候扩容
 A:ArrayList在添加元素时，会先判断当前数组的容量是否足够，如果不够则会进行扩容。扩容时，会创建一个原数组长度的1.5倍的新数组，并将原数组中的元素复制到新数组中。
 
-arraylist是线程安全的吗
+#### arraylist是线程安全的吗
 A:ArrayList是非线程安全的，如果需要在多线程环境下使用ArrayList，可以使用Collections.synchronizedList()方法将ArrayList转换为线程安全的List。
 
-线程安全的list有哪些
+#### 线程安全的list有哪些
 A:线程安全的List有Vector和Collections.synchronizedList()方法转换的List。Vector是一种线程安全的List实现，而Collections.synchronizedList()方法可以将ArrayList转换为线程安全的List。
 
+### Vector
+Vector的底层
+
+为其所有需要保证线程安全的方法都添加了synchronized关键字，锁住了整个对象
 ## Set
 
 对集合进行排序时,需要实现Comparable接口,重写compareTo方法
@@ -199,14 +203,32 @@ HashMap本身是非线程安全的，如果需要在多线程环境下使用Hash
 2. 使用ConcurrentHashMap代替HashMap，ConcurrentHashMap是一种线程安全的Map实现。
 3. 使用读写锁来保证HashMap的线程安全性，即使用ReentrantReadWriteLock来控制读写操作的并发访问。
 
+### HashTable
+
+Hashtable与Vector类似，都是为每个方法添加了synchronized关键字，来实现的线程安全，锁住了整个对象。Hashtable是一个线程安全的集合,是单线程集合，它给几乎所有public方法都加上了synchronized关键字。
 
 ### ConcurrentHashMap
 
-#### ConcurrentHashMap原理
+#### ConcurrentHashMap原理**
 
+在 JDK 1.7 中它使用的是数组加链表的形式实现的，而数组又分为：大数组 Segment 和小数组 HashEntry
+Segment 本身是基于 ReentrantLock 实现的加锁和释放锁的操作，这样就能保证多个线程同时访问 ConcurrentHashMap 时，同一时间只有一个线程能操作相应的节点，这样就保证了 ConcurrentHashMap 的线程安全了。
+
+JDK1.7之后
+使用的是 CAS + volatile 或 synchronized 的方式来保证线程安全的
 ConcurrentHashMap 已经摒弃了 Segment 的概念，而是直接用 Node 数组+链表+红黑树的数据结构来实现，并发控制使用 synchronized 和 CAS 来操作。
 
+在 JDK 1.8 中，添加元素时首先会判断
+- **容器是否为空，如果为空则使用 volatile 加 CAS 来初始化**。
+- 如果容器不为空则根据存储的元素计算该位置是否为空
+  - 如果为空则利用 CAS 设置该节点；
+  - **如果不为空则使用 synchronize 加锁**，遍历桶中的数据，替换或新增节点到桶中，最后再判断是否需要转为红黑树，这样就能保证并发访问时的线程安全了。
+
+我们把上述流程简化一下，我们可以简单的认为在 JDK 1.8 中，ConcurrentHashMap 是在头节点加锁来保证线程安全的，锁的粒度相比 Segment 来说更小了，发生冲突和加锁的频率降低了，并发操作的性能就提高了。而且 JDK 1.8 使用的是红黑树优化了之前的固定链表，那么当数据量比较大的时候，查询性能也得到了很大的提升，从之前的 O(n) 优化到了 O(logn) 的时间复杂
+
+
 13、concurrenthashmap最耗时的操作是什么
+A: ConcurrentHashMap最耗时的操作是put操作，因为put操作需要保证线程安全，需要进行加锁操作，而加锁操作会影响并发性能。
 
 12、hashtable和concurrenthashmap的区别
 
