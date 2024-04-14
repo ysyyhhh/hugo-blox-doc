@@ -263,6 +263,16 @@ Redis的同步机制包括主从复制和哨兵机制。
 
 Pipeline的好处包括减少网络延迟、提高吞吐量等，需要使用时可以将多个命令打包发送到Redis服务器上执行。
 
+## Redis应用
+
+### 分布式锁
+
+分布式锁实现：
+
+原始方式：setnx key true（死锁）/set key true ex 30 nx（锁误删）-> 锁重入问题。
+Redisson 框架实现方式：Redis + Lua 实现。
+
+
 ## Redis集群：
 
 21、Redis需要把所有数据放到内存中吗？
