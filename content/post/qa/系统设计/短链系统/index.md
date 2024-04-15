@@ -1,7 +1,7 @@
 ---
 title: '短链系统'
 date: 2024-03-06
-lastmod: 2024-04-14
+lastmod: 2024-04-15
 author: ['Ysyy']
 categories: ['']
 tags: ['系统设计']
