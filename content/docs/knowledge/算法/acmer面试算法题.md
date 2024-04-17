@@ -395,8 +395,147 @@ N<100 ,Σwi < 1e5
 #### 小凯的疑惑
 
 
+# 实现题
 
+## 实现vector
 
+构造，析构，push_back，operator[]，resize，reserve
+
+```c++
+template <typename T>
+class Vector {
+private:
+    T* data;
+    int size, capacity;
+
+public:
+    Vector()
+    {
+        size = 0;
+        capacity = 1;
+        data = new T[capacity];
+    }
+    ~Vector()
+    {
+        delete[] data;
+    }
+    void push_back(T x)
+    {
+        if (size == capacity) {
+            reserve(capacity * 2);
+        }
+        data[size++] = x;
+    }
+    T& operator[](int x)
+    {
+        return data[x];
+    }
+    void resize(int x)
+    {
+        if (x > capacity) {
+            reserve(x);
+        }
+        size = x;
+    }
+    void reserve(int x)
+    {
+        if (x > capacity) {
+            capacity = x;
+            T* new_data = new T[capacity];
+            for (int i = 0; i < size; i++) {
+                new_data[i] = data[i];
+            }
+            delete[] data;
+            data = new_data;
+        }
+    }
+};
+
+```
+
+## 实现哈希表
+
+实现：put/get，在总数超过factor时扩容
+
+```C++
+
+template <typename K, typename V>
+class HashTable {
+private:
+    struct Node {
+        K key;
+        V value;
+        Node* next;
+        Node(K k, V v)
+        {
+            key = k;
+            value = v;
+            next = nullptr;
+        }
+    };
+    Vector<Node*>* data;
+    int capacity, size;
+    double factor;
+
+    int hash(K key)
+    {
+        return key % capacity;
+    }
+
+public:
+
+    HashTable(int cap = 1e6, double f = 0.75)
+    {
+        capacity = cap;
+        factor = f;
+        size = 0;
+        data = new Vector<Node*>[capacity];
+    }
+    ~HashTable()
+    {
+        delete[] data;
+    }
+    void put(K key, V value)
+    {
+        int h = hash(key);
+        for (int i = 0; i < data[h].size; i++) {
+            if (data[h][i]->key == key) {
+                data[h][i]->value = value;
+                return;
+            }
+        }
+        data[h].push_back(new Node(key, value));
+        size++;
+        if (size > capacity * factor) {
+            resize(capacity * 2);
+        }
+    }
+    V get(K key)
+    {
+        int h = hash(key);
+        for (int i = 0; i < data[h].size; i++) {
+            if (data[h][i]->key == key) {
+                return data[h][i]->value;
+            }
+        }
+        return V();
+    }
+    void resize(int new_capacity)
+    {
+        Vector<Node*>* new_data = new Vector<Node*>[new_capacity];
+        for (int i = 0; i < capacity; i++) {
+            for (int j = 0; j < data[i].size; j++) {
+                int h = hash(data[i][j]->key);
+                new_data[h].push_back(data[i][j]);
+            }
+        }
+        delete[] data;
+        data = new_data;
+        capacity = new_capacity;
+    }
+};
+
+```
 
 # STL用法
 
@@ -470,6 +609,24 @@ https://www.cnblogs.com/Lee-yl/p/12749070.html
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # 杂谈后话
 
 写一点求职的经验和所见所闻吧！**不保证时效性和真实性，参考与否自行斟酌**。
@@ -480,6 +637,7 @@ https://www.cnblogs.com/Lee-yl/p/12749070.html
 - 请**珍惜每次面试机会**，尤其是面试喜欢的公司时。
 - 面试一般都会有记录和面试评价。
 - 所见所闻：大佬A大二时投递了理想公司的实习，意图刷该公司的面试经验。结果表现不佳，导致在真正需要找实习的时候，因之前的面评太差，导致没过简历/排序靠后（记不太清了）
+
 
 
 

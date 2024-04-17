@@ -23,6 +23,10 @@ JDK21正式引入了虚拟线程
 
 ![](img/JUC(Java并发)/Java线程结构.png)
 
+### Java中没有协程
+
+协程是多个协程对应一个内核线程的模型
+协程是一种用户级的轻量级"线程", 由程序员自己控制切换时机, 不需要操作系统内核介入。
 
 ### 为什么程序计数器、虚拟机栈和本地方法栈是线程私有的呢？
 
@@ -31,7 +35,6 @@ JDK21正式引入了虚拟线程
 - 字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制，如：顺序执行、选择、循环、异常处理。
 
 程序计数器是线程私有的，是为了线程切换时能够正确恢复执行现场。
-
 
 虚拟机栈
 - 每个线程在创建时都会创建一个虚拟机栈，用于存放线程的方法调用栈、局部变量表、操作数栈等信息。（执行的是Java方法）
@@ -154,7 +157,7 @@ public class Main {
         FutureTask<String> futureTask = new FutureTask<>(new MyCallable());
         Thread thread = new Thread(futureTask);
         thread.start();
-        System.out.println(futureTask.get()); //return value
+        System.out.println(futureTask.get()); //阻塞 return value
     }
 }
 ```
@@ -229,13 +232,41 @@ CPU Cache 的工作方式：
 
 CPU内部缓存不一致的解决 是通过**缓存一致性协议**来解决的。
 
+常见的CPU内部缓存一致性协议主要有以下几种:
+
+1. **MESI协议**:
+   - 该协议定义了四种缓存行状态：Modified(已修改)、Exclusive(独占)、Shared(共享)和Invalid(无效)。
+   - 当一个CPU读取或修改缓存行时,会通过总线事务与其他CPU进行协调,以维护缓存一致性。
+
+2. **MOESI协议**:
+   - 在MESI协议的基础上,增加了Owned(拥有)状态。
+   - Owned状态表示该缓存行被某个CPU独占修改,但其他CPU也可读取。
+   - 相比MESI,MOESI协议能更好地处理写回操作,提高性能。
+
+3. **Synapse协议**:
+   - 这是一种基于目录的缓存一致性协议。
+   - 每个缓存块都有一个目录项,记录该缓存块的状态和拥有该缓存块的处理器。
+   - 当某个处理器要访问缓存块时,先查询目录项,根据状态信息进行适当的操作。
+
+4. **Dragon协议**:
+   - 这是一种基于所有权的缓存一致性协议。
+   - 每个缓存块都有一个所有权状态,指示该缓存块是被独占修改、共享还是无效。
+   - 通过控制缓存块的所有权状态,可以实现缓存一致性。
+
+
+多机下的缓存一致性协议：
+- 写更新协议（Write-through）: 当数据被修改时,立即更新缓存和后端存储。这能保证缓存中的数据始终是最新的,但会增加写操作的延迟。
+- 写回协议（Write-back）: 当数据被修改时,只更新缓存,并将修改异步地刷新到后端存储。这能减少写操作的延迟,但可能会导致缓存中的数据暂时与后端不一致。
+- 失效协议（Write-invalidate）: 当数据被修改时,向其他缓存发送失效消息,使其失效。读取数据时,需要从后端重新加载。这能最大限度地减少写操作对读操作的影响。
+- 读独占协议（Read-exclusive）: 当一个缓存读取数据时,向其他缓存发送独占请求。其他缓存必须放弃该数据的副本,直到该缓存完成操作。这能避免读写冲突,但会增加读操作的延迟。
+
 但同时操作系统也需要解决缓存不一致的问题.(JMM)
 
 #### 指令重排序
 
 指令重排序是指 CPU 和编译器为了提高程序运行效率而对指令序列进行重新排序的一种手段。
 
-指令重排序可以保证串行语义一致，但是没有义务保证多线程间的语义也一致 ，所以在多线程下，指令重排序可能会导致一些问题。
+指令重排序可以保证**串行语义一致**，但是没有义务保证多线程间的语义也一致 ，所以在多线程下，指令重排序可能会导致一些问题。
 
 编译器优化重排：
 - 编译器（包括 JVM、JIT 编译器等）在不改变单线程程序语义的前提下，重新安排语句的执行顺序。
@@ -249,7 +280,9 @@ CPU内部缓存不一致的解决 是通过**缓存一致性协议**来解决的
 
 编译器和处理器的指令重排序的处理方式不一样。对于编译器，通过禁止特定类型的编译器重排序的方式来禁止重排序。
 
-对于处理器，通过插入内存屏障（Memory Barrier，或有时叫做内存栅栏，Memory Fence）的方式来禁止特定类型的处理器重排序。指令并行重排和内存系统重排都属于是处理器级别的指令重排序。
+对于处理器，通过插入内存屏障（Memory Barrier，或有时叫做内存栅栏，Memory Fence）的方式来禁止特定类型的**处理器重排序**。
+**指令并行重排和内存系统重排都属于是处理器级别的指令重排序。**
+
 > 内存屏障（Memory Barrier，或有时叫做内存栅栏，Memory Fence）是一种 CPU 指令，用来禁止处理器指令发生重排序（像屏障一样），从而保障指令执行的有序性。另外，为了达到屏障的效果，它也会使处理器写入、读取值之前，将主内存的值写入高速缓存，清空无效队列，从而保障变量的可见性。
 
 #### JMM
@@ -284,6 +317,7 @@ CPU、内存、I/O 设备的速度是有极大差异的，为了合理利用 CPU
 #### 可见性问题
 
 可见性问题,就是看不到修改后的值, 由CPU缓存导致.
+多个线程访问共享变量时，由于缓存和指令重排等因素，导致某个线程修改了变量的值，而其他线程并没有立即看到修改后的值，从而出现数据不一致的问题。
 
 ```java
 
@@ -303,7 +337,6 @@ int j = a//3
 #### 原子性问题
 
 原子性问题由分时复用CPU导致.
-
 
 Java中只有对基本数据类型的**读取和赋值**操作是原子性的，其他的操作都不是原子性的。
 下面语句1是原子性的, 其他都不是原子性的.
@@ -384,13 +417,17 @@ flag = true;          //语句2
 禁止指令重排
 将变量声明为 volatile ，在对这个变量进行读写操作的时候，会通过**插入特定的内存屏障** 的方式来禁止指令重排序。
 
-#### TODO: volatile 实现原理
+#### volatile 实现原理
 
 在Java 中，当线程读取一个volatile 变量时，会从主内存中读取变量的最新值，并把它存储到线程的工作内存中。 
 
 volatile主要通过汇编lock前缀指令，它会锁定当前内存区域的缓存（缓存行），并且立即将当前缓存行数据写入主内存（耗时非常短）
 
-当线程写入一个volatile 变量时，会把变量的值写入到线程的工作内存中，并**强制将这个值刷新到主内存中**。 
+当线程写入 volatile 变量时,会在写操作后加入一个 "写屏障" 指令,保证写操作立即刷新到主内存。
+- 写屏障指令会将当前 CPU 缓存行的数据立即刷新到主内存中
+当线程读取 volatile 变量时,会在读操作前加入一个 "读屏障" 指令,保证读取的是主内存中的最新值。
+ 
+内存屏障指令可以禁止 CPU 和编译器对相关指令进行重排序优化。
 
 #### 为什么volatile不能保证原子性
 
@@ -444,44 +481,44 @@ public class Singleton {
 }
 ```
 
+为什么要volatile修饰instance?
+A: 保证instance是可见的, 避免指令重排.
+
 
 ### synchronized关键字
 
 见 [synchronized关键字](####synchronized)
 
 ### final关键字
-所有的final修饰的字段都是编译期常量吗?
 
-如何理解private所修饰的方法是隐式的final?
-
-说说final类型的类如何拓展? 
-
-比如String是final类型，我们想写个MyString复用所有String中方法，同时增加一个新的toMyString()的方法，应该如何做?
-
-final方法可以被重载吗? 
-
-可以父类的final方法能不能够被子类重写? 
-
-不可以说说final域重排序规则?
-
-说说final的原理?
-
-使用 final 的限制条件和局限性?
 
 #### final的基础用法
+Q:
+可以父类的final方法能不能够被子类重写? 
+
 
 修饰类
 - final类不能有子类
 - final类的所有方法都隐式的是final的
 
+Q: 
+如何理解private所修饰的方法是隐式的final?
+说说final类型的类如何拓展? 
+比如String是final类型，我们想写个MyString复用所有String中方法，同时增加一个新的toMyString()的方法，应该如何做? 组合代替继承
+final方法可以被重载吗? 
+
 修饰方法
-- private方法隐式的是final的
+- **private方法**隐式的是final的
 - final方法不能被重写
 - final方法可以被重载
+
 
 修饰参数
 - final参数不能被修改
 - 用于向匿名内部类传递参数
+
+
+Q: 所有的final修饰的字段都是编译期常量吗?
 
 修饰变量
 - final修饰的字段**不都是编译期常量**
@@ -516,8 +553,92 @@ public class Test {
 }
 ```
 
-#### TODO: final域重排序
 
+
+
+可以说说final域重排序规则?
+
+#### TODO: final域重排序
+##### final域为基本类型
+```java
+public class FinalDemo {
+    private int a;  //普通域
+    private final int b; //final域
+    private static FinalDemo finalDemo;
+
+    public FinalDemo() {
+        a = 1; // 1. 写普通域
+        b = 2; // 2. 写final域
+    }
+
+    public static void writer() {
+        finalDemo = new FinalDemo();
+    }
+
+    public static void reader() {
+        FinalDemo demo = finalDemo; // 3.读对象引用
+        int a = demo.a;    //4.读普通域
+        int b = demo.b;    //5.读final域
+    }
+}
+```
+
+写final域重排序规则
+
+写final域的重排序规则**禁止对final域的写**重排序到构造函数之外，这个规则的实现主要包含了两个方面：
+- JMM禁止编译器把final域的写重排序到构造函数之外；
+- 编译器会在final域写之后，构造函数return之前，插入一个storestore屏障。这个屏障可以禁止处理器把final域的写重排序到构造函数之外。
+
+我们再来分析writer方法，虽然只有一行代码，但实际上做了两件事情：
+- 构造了一个FinalDemo对象；
+- 把这个对象赋值给成员变量finalDemo。
+
+我们来画下存在的一种可能执行时序图，如下：
+
+![](img/JUC(Java并发)/写final域重排序.png)
+
+由于a,b之间没有数据依赖性，普通域(普通变量)a可能会被重排序到构造函数之外，线程B就有可能读到的是普通变量a初始化之前的值(零值)，这样就可能出现错误。
+
+而final域变量b，根据重排序规则，会禁止final修饰的变量b重排序到构造函数之外，从而b能够正确赋值，线程B就能够读到final变量初始化后的值。
+
+因此，写final域的重排序规则可以确保：在对象引用为任意线程可见之前，对象的final域已经被正确初始化过了，而普通域就不具有这个保障。比如在上例，线程B有可能就是一个未正确初始化的对象finalDemo。
+
+
+读final域重排序规则
+
+在一个线程中，初次读对象引用和初次读该对象包含的final域，JMM会禁止这两个操作的重排序。(注意，这个规则仅仅是针对处理器)，处理器会在读final域操作的前面插入一个LoadLoad屏障。
+
+实际上，读对象的引用和读该对象的final域存在间接依赖性，一般处理器不会重排序这两个操作。但是有一些处理器会重排序，因此，这条禁止重排序规则就是针对这些处理器而设定的。
+
+
+read()方法主要包含了三个操作：
+- 初次读引用变量finalDemo;
+- 初次读引用变量finalDemo的普通域a;
+- 初次读引用变量finalDemo的final域b;
+
+假设线程A写过程没有重排序，那么线程A和线程B有一种的可能执行时序为下图
+
+![](img/JUC(Java并发)/读重排序.png)
+
+读final域的重排序规则可以确保：在读一个对象的final域之前，一定会先读这个包含这个final域的对象的引用。
+
+##### TODO：为引用类型
+
+按照final修饰的数据类型分类：
+基本数据类型:
+- final域写：禁止final域写与构造方法重排序，即禁止final域写重排序到构造方法之外，从而保证该对象对所有线程可见时，该对象的final域全部已经初始化过。
+- final域读：禁止初次读对象的引用与读该对象包含的final域的重排序。
+
+引用数据类型：
+- 额外增加约束：禁止在构造函数对一个final修饰的对象的成员域的写入与随后将这个被构造的对象的引用赋值给引用变量 重排序
+
+
+#### 说说final的原理?
+
+写final域会要求编译器在final域写之后，构造函数返回前插入一个StoreStore屏障。读final域的重排序规则会要求编译器在读final域的操作前插入一个LoadLoad屏障。
+
+
+#### 使用 final 的限制条件和局限性?
 
 ### Happens-Before规则
 
@@ -525,21 +646,21 @@ Happens-Before规则是Java内存模型中的一组规则，用于描述多线�
 
 Happens-Before规则主要包括以下几个规则：
 
-单一线程原则: 一个线程内部, 代码的执行顺序是按照代码的先后顺序执行的.
+- **单一线程**原则: 一个线程内部, 代码的执行顺序是按照代码的先后顺序执行的.
 
-管程锁定规则: 对同一个锁unlock操作必须先于在lock操作.
+- **管程锁定**规则: 对同一个锁unlock操作必须先于在lock操作.
 
-volatile变量规则: 对一个volatile变量的写操作必须先于对该变量的读操作
+- **volatile变量**规则: 对一个volatile变量的写操作必须先于对该变量的读操作
 
-线程启动规则: start()方法调用先于线程的每一个动作.
+- **线程启动**规则: start()方法调用先于线程的每一个动作.
 
-线程加入(join)规则: Thread对象的终止操作先于join()方法返回.
+- **线程加入(join)** 规则: Thread对象的**终止操作先于join()方法返回**.
 
-线程中断规则: 对线程interrupt()方法的调用先于被中断线程的代码检测到中断事件的发生. 即, 可以用interrupt()方法来检测线程是否被中断.
+- **线程中断**规则: 对线程interrupt()方法的调用先于被中断线程的代码检测到中断事件的发生. 即, 可以**用interrupt()方法来检测线程是否被中断**.
 
-对象终结规则: 对象的构造函数执行结束先于finalize()方法的开始.
+- **对象终结**规则: 对象的**构造函数执行结束**先于finalize()方法的开始.
 
-传递性: A先于B, B先于C, 那么A先于C.
+- **传递性**: A先于B, B先于C, 那么A先于C.
 
 ## 理解线程安全
 
@@ -652,6 +773,7 @@ executorService.execute(() -> {
 
 线程对立是指对象本身并不是线程安全的，而且在调用端使用加锁的方式也无法保证线程安全。
 
+
 ## 线程安全的实现方式
 
 ### 互斥同步 synchronized 和 ReentrantLock
@@ -686,7 +808,7 @@ public class SynchronizedExample {
 }
 ```
 
-还可以同步一个类, 两个线程调用同一个类的不同对象上的这种同步语句，也会进行同步。
+还可以同步一个类, 两个线程调用同一个类的**不同对象上的这种同步语句，也会进行同步**。
 
 ```java
 public class SynchronizedExample {
@@ -716,11 +838,15 @@ public class SynchronizedExample {
 }
 ```
 
-同步语句块的实现使用的是 monitorenter 和 monitorexit 指令，其中 monitorenter 指令指向同步代码块的开始位置， monitorexit 指令则指明同步代码块的结束位置。**
+同步语句块的实现使用的是 monitorenter 和 monitorexit 指令
+
+其中 **monitorenter 指令指向同步代码块的开始位置， monitorexit 指令则指明同步代码块的结束位置。**
 
 在执行monitorenter时，会尝试获取对象的锁，如果锁的计数器为 0 则表示锁可以被获取，获取后将锁计数器设为 1 也就是加 1。
 
-在执行 monitorexit 指令后，将锁计数器设为 0，表明锁被释放。如果获取对象锁失败，那当前线程就要阻塞等待，直到锁被另外一个线程释放为止。
+在执行 monitorexit 指令后，将锁计数器设为 0，表明锁被释放。
+
+如果获取对象锁失败，那当前线程就要阻塞等待，直到锁被另外一个线程释放为止。
 
 #### ReentrantLock
 
@@ -783,6 +909,20 @@ CAS指令有三个操作数，分别是内存位置V、旧的预期值A和新值
 
 CAS的实现是C++中的一个原子操作, 但是Java中的CAS是通过JNI来调用C++的CAS指令实现的.
 
+
+获取当前共享变量的值和期望值：
+- CAS操作的第一步是获取共享变量的当前值，同时也需要提供一个期望值，这个期望值是用来比较共享变量的当前值是否与之相等的基准。
+- 先获取共享变量得到旧的预期值A
+- 执行业务，得到新值B
+
+比较共享变量的当前值和期望值是否相等：
+- 在这一步，CAS会比较共享变量的当前值和之前提供的期望值是否相等。如果相等，说明共享变量的值符合预期，可以进行下一步操作。
+
+更新共享变量的值：
+- 如果共享变量的当前值与期望值相等，CAS会将共享变量的值更新为要写入的新值。这个操作是原子性的，即在这个过程中不会有其他线程对该共享变量进行干扰。
+
+处理失败的情况：
+- 如果共享变量的当前值与期望值不相等，说明此时有其他线程已经修改了共享变量的值。在这种情况下，当前线程需要重新获取共享变量的最新值，并重新执行步骤2和3，直至操作成功。
 
 CAS的应用: AtomicInteger 
 
@@ -852,11 +992,10 @@ ThreadLocal类可以让每个线程都有自己的共享变量，从而避免了
 ```java
 public class ThreadLocalExample1 {
     public static void main(String[] args) {
-        ThreadLocal threadLocal1 = new ThreadLocal();
-        ThreadLocal threadLocal2 = new ThreadLocal();
+        ThreadLocal threadLocal = new ThreadLocal();
         Thread thread1 = new Thread(() -> {
-            threadLocal1.set(1);
-            threadLocal2.set(1);
+                threadLocal1.set(1);
+                threadLocal2.set(1);
         });
         Thread thread2 = new Thread(() -> {
             threadLocal1.set(2);
@@ -874,7 +1013,8 @@ public class ThreadLocalExample1 {
 Thread类中定义了ThreadLocal.ThreadLocalMap 成员。
 `ThreadLocal.ThreadLocalMap threadLocals = null;`
 
-当调用get set时,先获取当前线程的ThreadLocalMap, 然后将ThreadLocal对象作为key, value作为value存入.
+
+当调用get set时,**先获取当前线程的ThreadLocalMap**, 然后将ThreadLocal对象作为key, value作为value存入.
 
 ```java
 public void set(T value) {
@@ -889,9 +1029,11 @@ public void set(T value) {
 
 ##### ThreadLocal的问题 -- 内存泄漏
 
-ThreadLocalMap中的Entry的key是弱引用, value是强引用, 如果key被回收了, value不会被回收, 会导致内存泄漏.
+ThreadLocalMap中的**Entry的key是弱引用**, value是强引用, 如果key被回收了, value不会被回收, 会导致内存泄漏.
 
 只要线程还在, ThreadLocalMap中的Entry就不会被回收.
+
+ThreadLocal 对象可能会被提前回收,导致使用时出现 NullPointerException。因此,开发人员在使用 ThreadLocal 时,需要注意适当的生命周期管理,比如在线程结束时主动调用 remove() 方法清理副本信息。
 
 解决方法:
 在使用完ThreadLocal后, 调用remove方法.
@@ -903,6 +1045,58 @@ ThreadLocalMap中的Entry的key是弱引用, value是强引用, 如果key被回�
 也叫纯代码, 在代码执行的任何时刻, 都可以被中断, 转而执行另一段代码, 然后再回到原来的代码.
 
 特征: 不依赖于任何共享的变量, 用到的状态变量都有方法的参数传递进来, 不会调用非可重入的方法.
+
+可重入代码(Reentrant Code)是指一个函数/方法可以被同一线程多次调用而不会产生任何问题的代码。换句话说,在执行该函数/方法的过程中,如果遇到对自身的再次调用,函数能够正确处理这种情况,不会陷入死锁或其他异常状态。
+
+举几个例子来说明可重入代码:
+
+1. **synchronized 关键字**:
+
+```java
+public class ReentrantExample {
+    public synchronized void foo() {
+        // 执行一些操作
+        foo(); // 可以再次调用自身
+    }
+}
+```
+
+在上述代码中,`foo()` 方法使用了 `synchronized` 关键字来确保线程安全。当一个线程进入 `foo()` 方法时,它会获取该对象的锁。即使 `foo()` 方法再次调用自身,由于线程已经持有了该对象的锁,所以不会发生死锁。这就是可重入的体现。
+
+2. **ReentrantLock 类**:
+
+```java
+public class ReentrantExample {
+    private final ReentrantLock lock = new ReentrantLock();
+
+    public void foo() {
+        lock.lock();
+        try {
+            // 执行一些操作
+            foo(); // 可以再次调用自身
+        } finally {
+            lock.unlock();
+        }
+    }
+}
+```
+
+在这个例子中,我们使用 `ReentrantLock` 来实现可重入的锁定机制。当一个线程进入 `foo()` 方法并成功获得锁时,即使方法再次调用自身,由于线程已经持有了该锁,所以不会发生死锁。
+
+3. **递归算法**:
+
+```java
+public int factorial(int n) {
+    if (n == 0) {
+        return 1;
+    }
+    return n * factorial(n - 1); // 可以递归调用自身
+}
+```
+
+在这个示例中,`factorial()` 方法是一个递归算法。它可以在自身内部多次调用自身,而不会产生任何问题。这就是可重入代码的体现。
+
+总的来说,可重入代码可以让同一个线程多次调用同一个函数/方法,而不会产生死锁或其他异常情况。这在多线程编程中非常重要,可以避免意外的并发问题。
 
 ## 线程机制
 
