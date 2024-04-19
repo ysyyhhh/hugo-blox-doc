@@ -9,14 +9,17 @@
 分布式锁实现：
 
 原始方式：setnx key true（死锁）/set key true ex 30 nx（锁误删）-> 锁重入问题。
+
+
 Redisson 框架实现方式：Redis + Lua 实现。
+
+
+### 分布式session登录
+
 
 
 ## Redis集群：
 
-21、Redis需要把所有数据放到内存中吗？
-
-是的，Redis需要把所有数据放到内存中，是因为它采用了基于内存的数据存储方式，可以快速读写数据。
 
 22、Redis集群的原理是什么？
 
@@ -41,6 +44,13 @@ Redis的密码可以通过配置文件设置，验证密码可以使用AUTH命�
 27、Redis哈希槽的概念是什么？
 
 Redis哈希槽的概念是将所有的key分散到不同的槽中存储，每个槽对应一个节点，通过哈希算法计算key所在的槽。
+
+
+Redis为何用哈希槽而不用一致性哈希？
+
+[得物面试：为啥Redis用哈希槽，不用一致性哈希？](https://mp.weixin.qq.com/s/Q68UN34-BqxyQFtkJL98lg)
+
+
 
 28、Redis集群的主从复制模型是什么？
 

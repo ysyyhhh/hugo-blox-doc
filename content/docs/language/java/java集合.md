@@ -24,13 +24,13 @@ Map: 无序，不可重复，键值对
 - HashMap: JDK1.8之前是数组+链表, JDK1.8之后是数组+链表/红黑树
 - LinkedHashMap: 基于HashMap实现, 有序
 - TreeMap: 红黑树(自平衡的二叉查找树), 有序
-- Hashtable: 数组(主体)+链表(解决哈希冲突), 线程安全
+- HashTable: 数组(主体)+链表(解决哈希冲突), 线程安全
 
 如何选用集合
 - 要键值对 - Map
   - 需要排序 - TreeMap
   - 不需要排序 - HashMap
-  - 需要线程安全 - Hashtable
+  - 需要线程安全 - HashTable
 - 不需要键值对 - Collection
   - 保证元素唯一 - Set
     - 需要排序 - TreeSet
@@ -88,7 +88,7 @@ A:线程安全的List有Vector和Collections.synchronizedList()方法转换的Li
 ### Vector
 Vector的底层
 
-为其所有需要保证线程安全的方法都添加了synchronized关键字，锁住了整个对象
+为其所有需要保证线程安全的方法都添加了**synchronized关键字**，锁住了整个对象
 ## Set
 
 对集合进行排序时,需要实现Comparable接口,重写compareTo方法
@@ -126,7 +126,7 @@ JDK1.5 引入的
 
 ### BlockingQueue 阻塞队列
 
-是一个接口，继承于Qeueu。
+是一个接口，继承于Queue。
 
 阻塞的原因是，支持当队列没用元素时一直阻塞，直到有元素。
 如果队列已满，则等到队列有空间时再插入元素。
@@ -158,6 +158,12 @@ HashMap是一种基于哈希表的Map实现，其底层实现主要包括数组�
 那么在jdk1.8的HashMap中，当链表的**长度超过8**时，链表会自动转化为红黑树，优化查询速度。
 
 jdk1.8之前插入链表是头插法，jdk1.8之后是尾插法。
+
+头插法：效率高、满足时间局部性原理
+
+- 但在扩容后可能会导致链表逆序，影响查询效率。
+- 扩容时可能会导致死循环（多线程场景下，跟链表逆序有关）
+
 
 put原理
 
@@ -214,6 +220,8 @@ Hashtable与Vector类似，都是为每个方法添加了synchronized关键字�
 在 JDK 1.7 中它使用的是数组加链表的形式实现的，而数组又分为：大数组 Segment 和小数组 HashEntry
 Segment 本身是基于 ReentrantLock 实现的加锁和释放锁的操作，这样就能保证多个线程同时访问 ConcurrentHashMap 时，同一时间只有一个线程能操作相应的节点，这样就保证了 ConcurrentHashMap 的线程安全了。
 
+分段锁的缺点是：在高并发的情况下，会出现大量线程阻塞，导致性能下降。
+
 JDK1.7之后
 使用的是 CAS + volatile 或 synchronized 的方式来保证线程安全的
 ConcurrentHashMap 已经摒弃了 Segment 的概念，而是直接用 Node 数组+链表+红黑树的数据结构来实现，并发控制使用 synchronized 和 CAS 来操作。
@@ -232,14 +240,8 @@ A: ConcurrentHashMap最耗时的操作是put操作，因为put操作需要保证
 
 12、hashtable和concurrenthashmap的区别
 
-红黑树可用别的数据结构代替吗
-
-跳表与红黑树比较
 
 线程安全的类有哪些，为什么线程安全
-
-
-
 
 
 

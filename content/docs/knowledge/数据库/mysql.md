@@ -285,3 +285,47 @@ ALTER TABLE table_name ADD column_name column_definition;
 ```sql
 ALTER TABLE table_name MODIFY column_name column_type;
 ```
+
+### 语句执行顺序
+
+
+1. from
+2. where
+3. group by
+4. having
+5. select
+
+
+exist 和 in 的区别
+exist 是判断子查询是否有结果，in 是判断字段是否在子查询的结果中
+
+EXISTS 子查询:
+
+执行顺序为:
+
+a. 先执行外层查询
+b. 对于外层查询的每一行,执行内层 EXISTS 子查询
+c. 如果内层子查询有结果,则外层行满足条件,否则不满足
+
+这种执行顺序使得 EXISTS 子查询更加高效,因为一旦内层子查询有结果,就可以立即确定外层行满足条件,无需执行完整个子查询。
+
+IN 子查询:
+
+执行顺序为:
+
+a. 先执行内层 IN 子查询,获取子查询的结果集
+b. 然后对外层查询的每一行,检查是否在子查询的结果集中
+
+与 EXISTS 不同,IN 子查询需要先完整执行内层子查询,才能判断外层行是否满足条件。
+ 
+## 其他
+
+MySQL的单表最大记录如何计算
+
+a为索引字段占用的空间
+b为非索引字段占用的空间
+
+Total =  8000^3  / ( (a+4)^2 * (a+b+30) )
+
+
+
