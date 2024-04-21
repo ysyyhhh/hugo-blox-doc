@@ -71,8 +71,44 @@ HTTP1.0 定义了三种请求方法： GET, POST 和 HEAD 方法。
 
 HTTP1.1 新增了六种请求方法：OPTIONS、PUT、PATCH、DELETE、TRACE 和 CONNECT 方法。
 
+
+## 协议
+
+[HTTP 是基于 TCP 还是 UDP 的](https://www.zhihu.com/question/20085992)
+
+
 ## HTTPS
 
 HTTPS校验的哈希算法是什么
 - RSA
+
+
+
+## 版本
+
+### HTTP/1.0
+
+
+### HTTP/1.1
+
+
+### HTTP/2
+
+
+目前(2024.4)[Spring Web](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-http2.html)默认还是HTTP/2
+
+
+### HTTP/3
+
+HTTP/3.0 之前是基于 TCP 协议的，而 HTTP/3.0 将弃用 TCP，改用 基于 UDP 的 QUIC 协议 
+
+#### HTTP/2的队头阻塞问题
+
+-  HTTP/2.0 在单个 TCP 连接上使用了多路复用
+   -  多个 HTTP 请求和响应共享一个 TCP 连接
+- 受到 TCP 拥塞控制的影响，少量的丢包就可能导致整个 TCP 连接上的所有流被阻塞
+  - 如果其中一个请求或响应因为网络拥塞或丢包而被阻塞
+- 那么后续的请求或响应也无法发送，导致整个连接的效率降低
+
+
 
