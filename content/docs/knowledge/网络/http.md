@@ -30,6 +30,7 @@ param1=1&param2=2
 
 ```
 
+
 ### 响应报文结构
 
 第一行包含协议版本、状态码以及描述，最常见的是 200 OK 表示请求成功了
@@ -65,11 +66,24 @@ X-Cache: HIT
 
 ```
 
-## HTTP的方法
+
+
+### HTTP的方法
 
 HTTP1.0 定义了三种请求方法： GET, POST 和 HEAD 方法。
 
 HTTP1.1 新增了六种请求方法：OPTIONS、PUT、PATCH、DELETE、TRACE 和 CONNECT 方法。
+
+
+### HTTP版本
+
+见[版本](##版本)
+
+### TODO: 状态码
+
+
+###  
+
 
 
 ## 协议
