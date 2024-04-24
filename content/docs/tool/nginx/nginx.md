@@ -41,3 +41,10 @@ nginx -s stop
 # 测试配置文件是否正确
 nginx -t
 ```
+
+## nginx 配置
+
+加权轮询
+
+
+

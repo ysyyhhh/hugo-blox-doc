@@ -24,7 +24,7 @@ MySQL
 - **表的具体行数**：InnoDB不保存表的具体行数，执行select count(*) from table时需要全表扫描。MyISAM保存表的具体行数，执行上述语句时直接读取保存的行数。
 - **异常奔溃后的恢复**：InnoDB是崩溃后完全恢复（依赖redo log），MyISAM是损坏后无法恢复
 - 索引实现不一样：InnoDB是聚集索引，MyISAM是非聚集索引
-
+  - 如果没有指定主键，InnoDB会选择一个唯一的非空索引作为主键,如果没有这样的索引，InnoDB会自动创建一个隐藏的主键, 隐藏的主键是一个6字节的字段，是一个递增的整数，这个隐藏的主键是不可见的，但是可以通过show create table来查看。
 
 
 ## 日志
@@ -232,6 +232,11 @@ InnoDB存储引擎在 RR 级别下通过 MVCC和 Next-key Lock 来解决幻读�
 #### MYSQL中死锁的判断
 
 使用SHOW ENGINE INNODB STATUS命令查看
+
+在新增订单记录之前，先通过 select ... for update 语句查询订单是否存在，如果不存在才插入订单记录。
+
+而正是因为这样的操作，当业务量很大的时候，就可能会出现死锁。
+
 
 #### 如何解除死锁
 
