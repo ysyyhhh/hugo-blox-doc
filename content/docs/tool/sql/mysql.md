@@ -2,11 +2,20 @@
 
 ## MySql常用命令
 
+查看所有用户和host
+
+```
+select user,host from mysql.user;
+```
+
 ##### 修改用户
 
 修改密码
 ```
 alter user 'root'@'localhost' identified with mysql_native_password by '123456';
+
+alter user 'digitalmap'@'%' identified with mysql_native_password by 'digitalmap';
+
 ```
 
 修改用户host
@@ -25,8 +34,16 @@ flush privileges;
 
 ```
 create user 'remote'@'%' identified by 'password'
+create user 'digitalmap'@'localhost' identified by 'digitalmap_root'
+
+
 GRANT all ON *.* TO 'remote'@'%';
+
+GRANT all ON digitalmap.* TO 'digitalmap'@'%';
+
 grant all privileges on *.* to 'remote'@'%' with grant option;
+
+grant all privileges on digitalmap.* to 'digitalmap'@'%' with grant option;
 
 *.*所有数据库下的所有表
 ```

@@ -114,6 +114,7 @@ cp -rp source dest
 scp -r username@ip:/home/username/data /home/username/data
 
 
+
 # 权限设置
 chmod 777 filename
 # 参数解释
@@ -123,6 +124,20 @@ chmod 777 filename
 
 # 三位数分别代表所有者、所属组、其他用户的权限
 # 读、写、执行分别用4、2、1表示
+```
+
+## 进程
+
+查看端口占用
+
+```
+netstat -tunlp
+```
+
+查看进程状态
+
+```shell
+ps -ef
 ```
 
 ## 工具
