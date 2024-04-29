@@ -1,7 +1,7 @@
 ---
 title: 'MapReduce: Simplified Data Processing on Large Clusters'
 date: 2024-03-05
-lastmod: 2024-04-28
+lastmod: 2024-04-29
 author: ['Ysyy']
 categories: ['']
 tags: ['分布式']

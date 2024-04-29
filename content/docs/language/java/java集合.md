@@ -234,15 +234,12 @@ ConcurrentHashMap 已经摒弃了 Segment 的概念，而是直接用 Node 数�
 
 我们把上述流程简化一下，我们可以简单的认为在 JDK 1.8 中，ConcurrentHashMap 是在头节点加锁来保证线程安全的，锁的粒度相比 Segment 来说更小了，发生冲突和加锁的频率降低了，并发操作的性能就提高了。而且 JDK 1.8 使用的是红黑树优化了之前的固定链表，那么当数据量比较大的时候，查询性能也得到了很大的提升，从之前的 O(n) 优化到了 O(logn) 的时间复杂
 
-
 13、concurrenthashmap最耗时的操作是什么
 A: ConcurrentHashMap最耗时的操作是put操作，因为put操作需要保证线程安全，需要进行加锁操作，而加锁操作会影响并发性能。
 
+
 12、hashtable和concurrenthashmap的区别
 
-
 线程安全的类有哪些，为什么线程安全
-
-
 
 
