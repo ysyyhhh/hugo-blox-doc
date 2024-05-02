@@ -1,7 +1,7 @@
 ---
 title: 'NoRBERT：使用迁移学习改进需求分类任务'
 date: 2024-03-01
-lastmod: 2024-04-29
+lastmod: 2024-05-02
 author: ['Ysyy']
 categories: ['']
 tags: ['大模型']
