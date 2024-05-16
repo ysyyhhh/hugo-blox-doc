@@ -87,3 +87,11 @@ git submodule foreach git pull # 更新所有子模块
 # 5. 执行rm -rf path/to/submodule
 ```
 
+
+## gitignore
+
+```
+在已忽略文件夹中不忽略指定文件夹：
+/libs/*
+!/libs/extend/
+```
