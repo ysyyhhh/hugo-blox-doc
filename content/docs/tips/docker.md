@@ -169,6 +169,26 @@ ENV PATH /opt/conda/envs/py38/bin:$PATH
 参考[在Docker for Windows中运行GUI程序](https://www.cnblogs.com/larva-zhh/p/10531824.html)
 
 
+报错：
+libGL error: No matching fbConfigs or visuals found
+
+libGL error: failed to load driver: swrast
+
+解决办法：
+-  https://bbs.huaweicloud.com/blogs/281862
+-  或取消勾选 native opengl
+
+### ubuntu下的情况
+
+安装虚拟显示屏
+https://blog.csdn.net/Ber_Bai/article/details/127768374
+
+挂载卷传入 /tmp/.X11-unix
+DISPLAY一般是:1.0
+
+在宿主机上
+xhost +
+
 ## 前后端项目静态资源转发
 
 后端 springboot时：
