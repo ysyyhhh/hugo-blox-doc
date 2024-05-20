@@ -65,6 +65,8 @@ usermod -g groupname username
 # 查看所有用户
 cat /etc/passwd
 
+# 切换用户
+su username
 ```
 
 ## 目录挂载

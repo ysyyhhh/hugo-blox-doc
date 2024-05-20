@@ -77,9 +77,16 @@ ALTER TABLE 表名 AUTO_INCREMENT = 1;
 
 #### 文件
 
+读取sql
 ```
 source
 ```
+
+导出为sql
+```
+mysqldump -u root -p 数据库名 > 文件名.sql
+```
+
 
 #### 数据库
 
