@@ -197,8 +197,9 @@ cat ~/.ssh/id_rsa.pub
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
 sudo sed -i 's/archive.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list
 
-# 更新源
-s
+
+
 ```
+
 
 
