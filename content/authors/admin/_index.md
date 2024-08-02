@@ -65,6 +65,21 @@ education:
 
 work:
   - position: Backend Software Engineer Intern
+    company_name: Ant Group
+    company_url: 'https://www.antgroup.com/'
+    date_start: 2024-05-27
+    date_end: 2024-10-01
+    summary: |2-
+      Project: Serverless Function Code Generation
+        - Description: Build two different scenarios of function code generation based on LangChain, Multi-Agent, and RAG:
+          - Cloud development functions: wide application scenarios, many documents, few interfaces, focusing on implementing business logic and cloud development environment configuration.
+          - MaaS functions: many APIs (30,000+), many professional scenarios, few documents, focusing on retrieving and using multiple APIs for data processing.
+        - Work content:
+          - By building a knowledge base, form an RAG process of intent recognition, query rewriting, recall, sorting, generation and verification, iteration
+            - Implement a multi-round dialogue, iterative generation, environment guidance cloud development function writing assistant.
+          - Through Multi-Agent parallel processing, RAG based on Agent reflection, Graph, and real-time processing of online documents
+            - Built a function generation for massive API retrieval and complex data processing in multiple scenarios of SRE.
+  - position: Backend Software Engineer Intern
     company_name: inspirai
     company_url: 'https://www.inspirai.com/'
     company_logo: 'https://www.inspirai.com/pc/images/common/logo1.svg'
@@ -97,14 +112,6 @@ awards:
     # summary: |
     #   Learned:
     #   - Synthesize your own blockchain solutions
-# Skills
-# 编程语言&开发平台: Java，Python，C/C++, 主要在Linux环境下进行开发
-# 后端框架: 熟悉 SpringCloud 、SpringBoot、，使用过FastAPI	、Django
-# 前端框架: 熟悉 Vue、uni-app、微信小程序，使用过QT框架、Swing
-# 数据库: 熟练使用Mysql，了解数据库优化原理，经常使用Redis、MinIO、MongoDB, 
-# 分布式: 使用过Flask, Elasticsearch, RabbitMQ, Redis, Nacos
-# 部署: 熟练使用docker,使用过k8s, GitLab CI、GitHub Actions
-# 熟练掌握算法和数据结构知识，在ACM-ICPC等多项算法竞赛中获奖, 熟悉设计模式
 
 skills:
 
@@ -200,6 +207,6 @@ skills:
 
 ---
 
-<!-- 找2024.6.30 后的实习机会 -->
+<!-- 找25届应届毕业生的正式工作 -->
 
-I am a master student in Software Engineering at Nanjing University. I am interested in software engineering, especially in the field of backend development. I am currently looking for a backend software engineer intern position from 2024.6.30. If you are interested in my profile, please feel free to contact me.
+I am a master student in Software Engineering at Nanjing University. I am interested in software engineering, especially in the field of backend development. I am currently looking for a backend software engineer position starting at 2025 when I graduate. If you are interested in my profile, please feel free to contact me.
