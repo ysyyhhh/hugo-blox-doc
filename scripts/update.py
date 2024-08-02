@@ -57,7 +57,6 @@ def adjust_blog(dir):
             adjust_blog(os.path.join(root, name))
      
 def adjust_docs(dir):
-    os.chdir(dir)
     '''
     对于每一个原有的文件夹D
     需要在D下创建一个_index.md文件
@@ -70,12 +69,20 @@ def adjust_docs(dir):
     This section covers D docs.
     
     然后调用blog
-    '''
     
+    但如果dir是img文件夹,则不变
+    '''
     os.chdir(dir)
+    
+    
     for root, dirs, files in os.walk("."):
         root = os.path.join(dir, root)
+        if root.endswith('img'):
+            continue
         for name in dirs:
+            if name == 'img':
+                continue
+            # print(root, name)
             # 生成_index.md
             with open(os.path.join(root, name, '_index.md'), 'w', encoding='utf-8') as f:
                 f.write('---\n')
@@ -94,6 +101,8 @@ def adjust_docs(dir):
             # if name.endswith('.md') and name != '_index.md':
             #     create_index_blog(root, name)
         for name in dirs:
+            if name == 'img':
+                continue
             # 递归调用
             adjust_docs(os.path.join(root, name))
 
