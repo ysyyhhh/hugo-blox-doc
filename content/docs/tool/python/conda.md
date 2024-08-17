@@ -19,6 +19,8 @@ conda deactivate
 # 删除环境
 conda remove -n py3 --all
 
+# 导出环境为.tar
+conda pack -n <env_name> -o <env_name>.tar.gz
 ```
 
 ## 迁移时可能会出现pip问题
