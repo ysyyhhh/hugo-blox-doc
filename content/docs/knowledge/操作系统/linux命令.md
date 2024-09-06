@@ -111,7 +111,18 @@ root      1023     1  0 10:00 ?        00:00:00 /usr/bin/java
 ps aux --sort=-%mem | head
 
 
+## 应用相关
 
+查看linux系统中的service
+service --status-all
+
+### nginx相关
+
+查看nginx进程
+ps -ef | grep nginx
+
+查看nginx配置文件
+nginx -t
 
 
 ## 网络相关
