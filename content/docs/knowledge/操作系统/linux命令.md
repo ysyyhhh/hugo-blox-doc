@@ -160,6 +160,19 @@ dropped: 丢弃的数据包的数量
 overruns: 数据包在接收时超出了缓冲区的大小
 frame: 数据包在接收时出现了 CRC 错误
 
+### 防火墙
+
+查看防火墙状态
+firewall-cmd --state
+
+查看防火墙规则
+firewall-cmd --list-all
+
+查看端口是否开放
+firewall-cmd --query-port=80/tcp
+
+开放端口
+firewall-cmd --zone=public --add-port=80/tcp --permanent
 ### socket信息查看
 
 netstat
@@ -303,6 +316,13 @@ traceroute to www.baidu.com (180.101.50.242), 30 hops max, 60 byte packets
 - 2: 路由器的 IP 地址
 - 3: 三次 ICMP 数据包的延迟时间
 - *: 丢包
+
+测试ip+端口
+
+telnet www.baidu.com 80
+
+
+
 
 
 
