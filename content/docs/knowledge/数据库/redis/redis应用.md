@@ -227,8 +227,6 @@ typedef struct redisObject {
 - 在 Redis 中可以用 zadd 方法和 zrange 方法来完成排序队列和获取 200 个商品的操作。
 
 
-
-
 ### 缓存与数据库的双写一致性(缓存更新策略)
 
 
@@ -243,7 +241,6 @@ typedef struct redisObject {
 
 实际开发中，Redis 和 MySQL 的更新策略用的是 Cache Aside，
 
-
 #### 先更新数据库再删除缓存 (Cache Aside)
 
 写策略的步骤：
@@ -256,7 +253,6 @@ typedef struct redisObject {
 
 不能先删除缓存再更新数据库的原因:
 - 「读+写」并发时, 数据不一致.
-
 
 即删除了缓存之后, 还没有更新数据库, 这时候另一个线程读取了缓存, 由于缓存被删除, 从数据库中读取了旧数据.
 
