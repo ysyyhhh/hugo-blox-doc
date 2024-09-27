@@ -229,7 +229,6 @@ typedef struct redisObject {
 
 ### 缓存与数据库的双写一致性(缓存更新策略)
 
-
 常见的缓存更新策略共有3种：
 
 - Cache Aside（旁路缓存）策略；
