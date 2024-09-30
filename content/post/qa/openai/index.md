@@ -1,7 +1,7 @@
 ---
 title: 'openai 相关QA'
 date: 2023-12-08
-lastmod: 2024-09-28
+lastmod: 2024-09-30
 author: ['Ysyy']
 categories: ['']
 tags: ['qa']
