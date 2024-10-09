@@ -840,6 +840,8 @@ public class SynchronizedExample {
 
 ReentrantLock是JUC包中的类，是一种可重入的互斥锁。
 
+TODO: 原理
+
 ReentrantLock可以替代synchronized进行同步，ReentrantLock可以提供更多的同步操作，如中断、超时、多个条件等。
 
 ```
@@ -877,6 +879,9 @@ public static void main(String[] args) {
 
 * 这是因为synchronized是JVM层面的锁, 在JDK6之后进行了很多优化, 所以性能和ReentrantLock差不多, 且更加简洁.
 * 并且不用担心忘记释放锁, 也不用担心死锁问题.
+
+
+
 
 ### 非阻塞同步
 
