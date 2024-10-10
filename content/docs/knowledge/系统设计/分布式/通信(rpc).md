@@ -14,4 +14,3 @@ RPC（Remote Procedure Call） 即远程过程调用，通过名字我们就能�
 ![](img/通信(RPC)/RPC原理图.png)
 
 https://xie.infoq.cn/article/eda414b9ee0f2b11437b546d6
-

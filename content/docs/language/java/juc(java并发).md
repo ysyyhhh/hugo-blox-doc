@@ -866,6 +866,14 @@ public static void main(String[] args) {
 }
 ```
 
+ReentrantLock 的底层实现主要依赖于 AbstractQueuedSynchronizer（AQS）这个抽象类。AQS 是一个提供了基本同步机制的框架，其中包括了队列、状态值等。
+
+ReentrantLock 在 AQS 的基础上通过内部类 Sync 来实现具体的锁操作。
+
+可重入锁是指同一个线程在获取了锁之后，可以再次重复获取该锁而不会造成死锁或其他问题。当一个线程持有锁时，如果再次尝试获取该锁，就会成功获取而不会被阻塞。
+
+ReentrantLock实现可重入锁的机制是基于线程持有锁的计数器。
+
 #### synchronized 和 ReentrantLock 的区别
 
 * 锁的实现: synchronized是Java的关键字, 是JVM层面的锁, 是隐式的, **不需要用户去手动释放锁**; ReentrantLock是JUC包中的类, 是API层面的锁, 是显式的, 需要用户去手动释放锁.
@@ -953,6 +961,9 @@ ABA问题是指一个值原来是A，后来被改成了B，然后又被改回为
 JUC包中提供了一个带有标记的原子引用类AtomicStampedReference来解决ABA问题。
 
 它可以通过控制变量的版本来保证CAS的正确性。
+
+Java中有AtomicStampedReference来解决这个问题，他加入了预期标志和更新后标志两个字段，更新时不光检查值，还要检查当前的标志是否等于预期标志，全部相等的话才会更新。
+
 
 ### 无同步方案
 
