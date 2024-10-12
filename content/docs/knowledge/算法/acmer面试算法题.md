@@ -332,6 +332,36 @@ int main()
 
 易得上述公式的近似为 2*n, 时间复杂度O(n)
 
+```
+int findk(int* a, int l, int r, int k)
+{
+    while (1) {
+        int flagi = (l + r) / 2;
+        swap(a[flagi], a[l]);
+
+        int i = l, j = r;
+        int flag = a[i];
+
+        while (i < j) {
+            while (i < j && a[j] >= flag)
+                j--;
+            a[i] = a[j];
+            while (i < j && a[i] <= flag)
+                i++;
+            a[j] = a[i];
+        }
+        a[i] = flag;
+
+        if (i == k)
+            return a[i];
+        else if (i < k) {
+            l = i + 1;
+        } else {
+            r = i - 1;
+        }
+    }
+}
+```
 
 
 ## 串
