@@ -254,3 +254,81 @@ jar 包和静态路径关系
 
     }
 ```
+
+## 启动docker时使用环境变量的注意事项
+
+可以通过编写sh文件来载入环境变量
+要注意centos 是source，ubuntu 直接 . 就行
+
+
+通用docker
+
+```
+version: '3.8'
+services:
+  client:
+    image: ${IMAGE_PREFIX}/${PROJECT_NAME}_client:1.1.0
+    # build: ./client
+    ports:
+      - ${CLIENT_PORT}:${CLIENT_PORT}
+    environment:
+      - BASE_API=/api
+      - SERVER_URL=http://server:${SERVER_PORT}
+      - CLIENT_PORT=${CLIENT_PORT}
+  admin:
+    image: ${IMAGE_PREFIX}/${PROJECT_NAME}_admin:1.0.0
+    # build: ./adminr
+    environment:
+      # - NODE_ENV=production
+      # - VITE_APP_TITLE=数据资源管理平台
+      # - VITE_APP_BASE_API=/api
+      # - VITE_SERVE=http://server:${SERVER_PORT}
+      - BASE_API=/api
+      - SERVER_URL=http://server:${SERVER_PORT}
+      - ADMIN_PORT=${ADMIN_PORT}
+    ports:
+      - ${ADMIN_PORT}:${ADMIN_PORT}
+  server:
+    image: ${IMAGE_PREFIX}/${PROJECT_NAME}_server:1.0.0
+    # build: ./server
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    environment:
+      - MYSQL_URL=jdbc:mysql://mysql:3306/${MYSQL_DATABASE}?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MINIO_ENDPOINT=http://minio:${MINIO_PORT}
+      - MINIO_BUCKET_NAME=${MINIO_BUCKET_NAME}
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+    depends_on:
+      - mysql
+      - minio
+  mysql:
+    image: mysql:5.7
+    ports:
+      - ${MYSQL_PORT}:3306
+    volumes:
+      - ${DATA_PATH}/mysql/logs:/var/log/mysql
+      - ${DATA_PATH}/mysql/data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - TZ=Asia/Shanghai
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  minio:
+    image: bitnami/minio:latest
+    ports:
+      - ${MINIO_PORT}:9000
+      - ${MINIO_MANAGE_PORT}:9001
+    volumes:
+      - ${DATA_PATH}/minio/data:/data
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+      - TZ=Asia/Shanghai
+```
+
+
+
+
+
