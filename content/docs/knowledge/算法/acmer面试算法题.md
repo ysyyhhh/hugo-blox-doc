@@ -567,6 +567,60 @@ public:
 
 ```
 
+## 实现 LRU
+
+```
+#include <unordered_map>
+#include <list>
+
+class LRUCache {
+public:
+    LRUCache(int capacity) {
+        this->capacity = capacity;
+    }
+
+    int get(int key) {
+        // 如果 key 不存在,返回 -1
+        if (cache.find(key) == cache.end()) {
+            return -1;
+        }
+
+        // 将访问的 key 移到链表头部
+        list<int>::iterator it = cache[key].second;
+        cache_list.erase(it);
+        cache_list.push_front(key);
+        cache[key] = {cache[key].first, cache_list.begin()};
+
+        return cache[key].first;
+    }
+
+    void put(int key, int value) {
+        // 如果 key 已存在,更新值并将其移到链表头部
+        if (cache.find(key) != cache.end()) {
+            cache_list.erase(cache[key].second);
+            cache_list.push_front(key);
+            cache[key] = {value, cache_list.begin()};
+            return;
+        }
+
+        // 如果缓存已满,删除最近最少使用的 key
+        if (cache_list.size() == capacity) {
+            int lru_key = cache_list.back();
+            cache_list.pop_back();
+            cache.erase(lru_key);
+        }
+
+        // 添加新的 key-value 到缓存
+        cache_list.push_front(key);
+        cache[key] = {value, cache_list.begin()};
+    }
+
+private:
+    int capacity;
+    std::unordered_map<int, std::pair<int, std::list<int>::iterator>> cache;
+    std::list<int> cache_list;
+};
+```
 # STL用法
 
 
