@@ -189,6 +189,9 @@ DISPLAY一般是:1.0
 在宿主机上
 xhost +
 
+注意服务器重启后一般需要重新给予其他用户权限
+
+
 ## 前后端项目静态资源转发
 
 后端 springboot时：
@@ -328,7 +331,13 @@ services:
       - TZ=Asia/Shanghai
 ```
 
+# 常见问题
 
+## docker源被墙
 
+## npm install慢
+
+本地先npm install 生成 package-lock.json
+再构建docker镜像
 
 
