@@ -419,7 +419,6 @@ TODO:详细的栈帧结构
 - 在`Execution Engine`执行时,调用`Native Method Stack`中的方法
 - 和虚拟机有同样的权限
 
-
 在 Hotspot JVM 中，直接将本地方法栈和虚拟机栈合二为一
 
 ### Java堆

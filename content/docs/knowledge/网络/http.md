@@ -421,9 +421,7 @@ HTTPS 协议本身到目前为止还是没有任何漏洞的，即使你成功�
 
 ### HTTP/2
 
-
 目前(2024.4)[Spring Web](https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-http2.html)默认还是HTTP/2
-
 
 ### HTTP/3
 

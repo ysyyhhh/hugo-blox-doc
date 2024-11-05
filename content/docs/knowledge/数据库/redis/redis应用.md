@@ -502,7 +502,6 @@ quorum 的值建议设置为哨兵个数的二分之一加 1，例如 3 个哨�
 3. 将新主节点的 IP 地址和信息，通过「发布者/订阅者机制」**通知给客户端**；
 4. 继续监视旧主节点，**当这个旧主节点重新上线时，将它设置为新主节点的从节点**
 
-
 #### 哨兵集群的组成
 
 哨兵节点之间是通过 Redis 的发布者/订阅者机制来相互发现的。
@@ -530,7 +529,6 @@ Redis Cluster 方案采用哈希槽（Hash Slot），来处理数据和节点之
 
 
 [得物面试：为啥Redis用哈希槽，不用一致性哈希？](https://mp.weixin.qq.com/s/Q68UN34-BqxyQFtkJL98lg)
-
 
 
 ### 集群脑裂问题
@@ -570,16 +568,21 @@ leader哨兵会把旧主节点设置为从节点(A), A向新主节点请求同�
 
 ### Redis的大Key处理
 
+https://help.aliyun.com/zh/redis/user-guide/identify-and-handle-large-keys-and-hotkeys
 
+
+
+答：Redis 的大 Key 问题是指 Redis 中某个 Key 的 Value 过大，导致 Redis 在处理这个 Key 的时候，会出现阻塞的情况。
+
+解决方案：
+- **拆分 Key**：将大 Key 拆分成多个小 Key，这样可以减少单个 Key 的 Value 的大小，从而避免大 Key 问题。
+- **使用 Hash**：将大 Key 的 Value 使用 Hash 结构存储，这样可以将大 Key 拆分成多个小 Key，从而避免大 Key 问题。
 
 ### Redis是否支持事务
 
 Redis 支持事务，但是 Redis 的事务和数据库的事务是不同的。
 
 开启事务, 使用 MULTI 命令，然后执行多个命令，最后使用 EXEC 命令来执行事务中的所有命令。
-
-
-
 
 Redis 提供了 DISCARD 命令，但是这个命令只能用来主动放弃事务执行，把暂存的命令队列清空.
 
@@ -613,7 +616,6 @@ Redis的事务是不支持回滚的
 - 不支持事务回滚是因为这种复杂的功能和 Redis 追求的简单高效的设计主旨不符合。
 
 这里不支持事务回滚，指的是不支持事务运行时错误的事务回滚。
-
 
 
 ## 其他
