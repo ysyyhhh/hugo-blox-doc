@@ -1,7 +1,7 @@
 ---
 title: '6.5840 Lab 1: MapReduce'
 date: 2024-03-05
-lastmod: 2024-11-13
+lastmod: 2024-11-14
 author: ['Ysyy']
 categories: ['']
 tags: ['mit-6.5840(6.824)']
