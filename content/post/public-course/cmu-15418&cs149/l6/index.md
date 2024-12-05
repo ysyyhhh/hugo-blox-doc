@@ -1,7 +1,7 @@
 ---
 title: 'L6'
 date: 2024-03-01
-lastmod: 2024-12-04
+lastmod: 2024-12-05
 author: ['Ysyy']
 categories: ['']
 tags: ['cmu-15418&cs149']
