@@ -22,9 +22,6 @@ I/O 复用（select 和 poll）
 ### epoll
 
 
-
-
-
 ## 实际应用
 
 ### Reactor模式
