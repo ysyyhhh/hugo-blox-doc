@@ -19,7 +19,6 @@ Queue: 有序，可重复, 用于存放队列元素
 - DelayQueue: 延迟队列, 用于存放延迟元素
 - ArrayDeque: 双端队列, Object[] 数组
 
-
 Map: 无序，不可重复，键值对
 - HashMap: JDK1.8之前是数组+链表, JDK1.8之后是数组+链表/红黑树
 - LinkedHashMap: 基于HashMap实现, 有序
@@ -40,7 +39,6 @@ Map: 无序，不可重复，键值对
     - 需要高效的查询 - ArrayList
 
 
-
 ## List
 
 ArrayList 与 Array比较
@@ -50,7 +48,6 @@ ArrayList 与 Array比较
 ArrayList 与 Vector比较
 - ArrayList是非线程安全的，而Vector是线程安全的
 - ArrayList是JDK1.2引入的(主要实现类,新)，而Vector是JDK1.0引入的
-
 
 ArrayList
 - 底层是数组,支持随机访问
@@ -101,7 +98,6 @@ HashSet是一种基于哈希表的Set实现，其底层实现与HashMap类似，
 #### 判断某对象是否在set中存在，需要重写哪些方法
 
 为了判断某个对象是否在Set中存在，需要重写该对象的hashCode()和equals()方法。hashCode()方法用于计算对象的哈希值，equals()方法用于比较两个对象是否相等。在重写这两个方法时，需要保证相等的对象具有相同的哈希值，否则会导致Set中出现重复元素。
-
 
 ## Queue
 
