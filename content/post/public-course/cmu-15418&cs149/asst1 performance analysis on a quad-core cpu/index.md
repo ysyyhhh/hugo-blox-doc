@@ -1,7 +1,7 @@
 ---
 title: 'asst1'
 date: 2024-03-01
-lastmod: 2025-01-13
+lastmod: 2025-01-18
 author: ['Ysyy']
 categories: ['']
 tags: ['cmu-15418&cs149']
