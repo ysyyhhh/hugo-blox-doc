@@ -1,7 +1,7 @@
 ---
 title: 'Abstraction vs implementation'
 date: 2024-03-01
-lastmod: 2025-03-30
+lastmod: 2025-04-01
 author: ['Ysyy']
 categories: ['']
 tags: ['cmu-15418&cs149']
