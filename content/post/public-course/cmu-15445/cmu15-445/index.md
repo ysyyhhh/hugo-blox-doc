@@ -1,7 +1,7 @@
 ---
 title: 'P0 [C++ Primer](https://15445.courses.cs.cmu.edu/fall2022/project0/)'
 date: 2024-03-01
-lastmod: 2025-05-26
+lastmod: 2025-05-27
 author: ['Ysyy']
 categories: ['']
 tags: ['cmu-15445']
