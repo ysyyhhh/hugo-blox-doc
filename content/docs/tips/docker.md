@@ -127,9 +127,15 @@ wsl --list -v
 # 6. 导入wsl
 wsl --import Ubuntu-20.04 D:\ubuntu\wsl\Ubuntu-20.04 D:\ubuntu\wsl\Ubuntu-20.04.tar --version 2
 
+wsl --import docker-desktop-data F:\wsl\docker-desktop-data E:\wsl\docker-desktop-data.tar --version 2
+# 6.1 如果需要导入docker-desktop
+wsl --import docker-desktop F:\wsl\docker-desktop E:\wsl\docker-desktop.tar --version 2
+
+
 # 7. 查看是否导入成功
 wsl --list -v
 ```
+
 
 ## docker 中设置特定版本的python
 
