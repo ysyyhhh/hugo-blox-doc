@@ -312,3 +312,27 @@ SET FOREIGN_KEY_CHECKS=1;
 ```
 
 
+
+
+```sql
+-- 1. 备用表（建议做好数据备用）
+-- mysqldump -u 用户名 -p 数据库名 model > modelbackup.sql
+use test;
+-- 2. 新建一张表，结构完全与model表一致，但是id从1开始自动增长
+CREATE TABLE `model_new` LIKE `model`;
+
+-- 3. 依序插入数据到新表中（按现有id从小到大）
+-- 这样插入时id会自动从1开始依次增加
+INSERT INTO `model_new` (`name`, `file_name`, `size`, `create_date`, `type`, `desc`) 
+SELECT `name`, `file_name`, `size`, `create_date`, `type`, `desc`
+FROM `model`
+ORDER BY `id`;
+
+-- 4. 检查无误后：
+-- 你可以用以下语句进行替换：
+RENAME TABLE `model` TO `model_old`, `model_new` TO `model`;
+
+-- 若无需要，你可以删除备用表：
+-- DROP TABLE `model_old`;
+
+```
