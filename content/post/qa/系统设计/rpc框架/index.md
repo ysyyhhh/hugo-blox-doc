@@ -1,7 +1,7 @@
 ---
 title: 'rpc框架'
 date: 2024-03-06
-lastmod: 2025-06-20
+lastmod: 2025-06-23
 author: ['Ysyy']
 categories: ['']
 tags: ['系统设计']
