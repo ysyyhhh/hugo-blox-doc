@@ -1,7 +1,7 @@
 ---
 title: 'L5 Work distribution and scheduling'
 date: 2024-03-01
-lastmod: 2025-09-21
+lastmod: 2025-10-10
 author: ['Ysyy']
 categories: ['']
 tags: ['cmu-15418&cs149']
