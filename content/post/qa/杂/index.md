@@ -1,7 +1,7 @@
 ---
 title: '杂'
 date: 2024-05-11
-lastmod: 2026-10-17
+lastmod: 2026-10-20
 author: ['Ysyy']
 categories: ['']
 tags: ['qa']
